@@ -280,9 +280,13 @@ address {
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.1.1" rel="Chapter" title="1.1 Problem Statement"/>
 <link href="#rfc.section.1.2" rel="Chapter" title="1.2 Notational Conventions"/>
-<link href="#rfc.section.2" rel="Chapter" title="2 Security Considerations"/>
-<link href="#rfc.references" rel="Chapter" title="3 Informative References"/>
-<link href="#rfc.appendix.A" rel="Chapter" title="A Examples"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 General Concept"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Initial Socket Intent Types"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 IANA Considerations"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Security Considerations"/>
+<link href="#rfc.references" rel="Chapter" title="6 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="6.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="6.2 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -292,8 +296,8 @@ address {
   <meta name="dct.creator" content="Tiesel, P. and T. Enghardt" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-tiesel-socketintents-latest" />
   <meta name="dct.issued" scheme="ISO8601" content="2017-6-01" />
-  <meta name="dct.abstract" content="Lorem Ipsum Todo" />
-  <meta name="description" content="Lorem Ipsum Todo" />
+  <meta name="dct.abstract" content="This document proposes the use of Socket Intents, a concept that allows applications to share its knowledge about upcoming communication and express its performance preferences in an abstract, portable and best-effort way.  Socket Intents shall enable the network stack to stem against the complexity and make the use of multiple provisioning domains as well as new transport protocols and features available to a larger user base by expressing the applications intents in an abstract and portable way." />
+  <meta name="description" content="This document proposes the use of Socket Intents, a concept that allows applications to share its knowledge about upcoming communication and express its performance preferences in an abstract, portable and best-effort way.  Socket Intents shall enable the network stack to stem against the complexity and make the use of multiple provisioning domains as well as new transport protocols and features available to a larger user base by expressing the applications intents in an abstract and portable way." />
 
 </head>
 
@@ -329,7 +333,7 @@ address {
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>Lorem Ipsum Todo</p>
+<p>This document proposes the use of Socket Intents, a concept that allows applications to share its knowledge about upcoming communication and express its performance preferences in an abstract, portable and best-effort way.  Socket Intents shall enable the network stack to stem against the complexity and make the use of multiple provisioning domains as well as new transport protocols and features available to a larger user base by expressing the applications intents in an abstract and portable way.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
@@ -351,28 +355,48 @@ address {
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
 <ul><li>1.1.   <a href="#rfc.section.1.1">Problem Statement</a></li>
 <li>1.2.   <a href="#rfc.section.1.2">Notational Conventions</a></li>
-</ul><li>2.   <a href="#rfc.section.2">Security Considerations</a></li>
-<li>3.   <a href="#rfc.references">Informative References</a></li>
-<li>Appendix A.   <a href="#rfc.appendix.A">Examples</a></li>
-<li><a href="#rfc.authors">Authors' Addresses</a></li>
+</ul><li>2.   <a href="#rfc.section.2">General Concept</a></li>
+<li>3.   <a href="#rfc.section.3">Initial Socket Intent Types</a></li>
+<li>4.   <a href="#rfc.section.4">IANA Considerations</a></li>
+<li>5.   <a href="#rfc.section.5">Security Considerations</a></li>
+<li>6.   <a href="#rfc.references">References</a></li>
+<ul><li>6.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>6.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
   </ul>
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
 <p id="rfc.section.1.p.1">Despite the advances in the transport area, the adaption of new transport protocols and transport protocol features is slow and only happens in limited domains (primarily in the Web browser and within datacenters).  The problem occurs for taking advantage of multiple access networks or provisioning domains (PvDs) available.  In both cases, the benefits of this new transport diversity comes at the cost of increased complexity that has to be mastered by the application programmer.</p>
-<p id="rfc.section.1.p.2">Enabling features like TCP fast open <a href="#RFC7413">[RFC7413]</a> or controlling how MPTCP should create subflows requires a specialized APIs that are not part of the standard socket API, often require deep knowledge of the transport protocol internals and, are not portable across operating systems (OSes).</p>
-<p id="rfc.section.1.p.3">Applications that want to use multiple interfaces usually have to use their own heuristics to select which access network to use.  Choosing the right interface is difficult as their characteristics differ, e.g. in terms of performance, and obtaining the necessary information is often not easy since it may require special privileges and differs heavily by OS.</p>
+<p id="rfc.section.1.p.2">Enabling features like TCP fast open <a href="#RFC7413">[RFC7413]</a> or controlling how MPTCP <a href="#RFC6824">[RFC6824]</a> should create subflows requires a specialized APIs that are not part of the standard socket API, often require deep knowledge of the transport protocol internals and, are not portable across different implementations.</p>
+<p id="rfc.section.1.p.3">Applications that want to use multiple interfaces usually have to use their own heuristics to select which access network to use.  Choosing the right interface is difficult as their characteristics differ, e.g. in terms of performance, and obtaining the necessary information is often not easy since it may require special privileges and differs heavily by implementations.</p>
 <p id="rfc.section.1.p.4">In all cases mentioned above, an application that wants to take advantage of new functionally is faced with substantially higher complexity regarding network APIs and the whole networking code.</p>
-<p id="rfc.section.1.p.5">This document proposes the use of Socket Intents, a concept that allows applications to share its knowledge about upcoming communication and express its performance preferences in an abstract, portable and best-effort way.  Socket Intents enable the OS to stem against the complexity and make new transport protocols and features available to a larger user base.</p>
 <h1 id="rfc.section.1.1"><a href="#rfc.section.1.1">1.1.</a> <a href="#problem-statement" id="problem-statement">Problem Statement</a></h1>
 <p id="rfc.section.1.1.p.1">Application programmers opening a communication channel typically know how this channel will be used. Beside the hard requirements already necessary for establishing the communication channels, e.g., reliable in-order stream transport, there is more information available: An application developer has an intuition about optimization preferences, e.g., optimize for bandwidth, latency, or cost, expectations, e.g.  towards data loss, and may also know specifics like how many bytes will be send or received.</p>
 <p id="rfc.section.1.1.p.2">These information does not directly map to the choice of a transport protocol, to certain protocol parameters nor which PvD to use, but the information can imply that the application can benefit from certain transport options or help to choose between multiple PvD as described in <a href="#RFC7556">[RFC7556]</a>, Section 6.2, and therefore enable the OS to adjust its defaults for this communication channel accordingly.</p>
-<p id="rfc.section.1.1.p.3">The preferences, expectations and other information known about the upcoming communication should be expressed in an intuitive, abstract<br/> way independent of the network- and transport protocol.  Its representation should be independent of the actual API used for network communication, e.g., these should be expressible in whatever API available, e.g., as socketopts for BSD sockets or ??? for <a href="#I-D.trammell-post-sockets">Post Sockets</a> <cite title="NONE">[I-D.trammell-post-sockets]</cite>.  Finally, given the expectations and external constrains known, the OS should care about them in an best-effort fashion and therefore try to choose the best transport protocol, default parameters and PvDs available and may try to further optimize based on them.</p>
+<p id="rfc.section.1.1.p.3">The preferences, expectations and other information known about the upcoming communication should be expressed in an intuitive, abstract<br/> way independent of the network- and transport protocol.  Its representation should be independent of the actual API used for network communication, e.g., these should be expressible in whatever API available, e.g., as &#8220;socketopts&#8221; for BSD sockets or as part of the address resolution configuration for <a href="#I-D.trammell-post-sockets">Post Sockets</a> <cite title="NONE">[I-D.trammell-post-sockets]</cite>.  Finally, given the expectations and external constrains known, the OS should care about them in an best-effort fashion and therefore try to choose the best transport protocol, default parameters and PvDs available and may try to further optimize based on them.</p>
 <h1 id="rfc.section.1.2"><a href="#rfc.section.1.2">1.2.</a> <a href="#notational-conventions" id="notational-conventions">Notational Conventions</a></h1>
 <p id="rfc.section.1.2.p.1">The words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;SHOULD&#8221;, and &#8220;MAY&#8221; are used in this document. It&#8217;s not shouting; when these words are capitalized, they have a special meaning as defined in <a href="#RFC2119">[RFC2119]</a>.</p>
-<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
-<h1 id="rfc.references"><a href="#rfc.references">3.</a> Informative References</h1>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#concept" id="concept">General Concept</a></h1>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#types" id="types">Initial Socket Intent Types</a></h1>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
+<p id="rfc.section.4.p.1">New Socket Intents types should be managed by the IANA.</p>
+<p id="rfc.section.4.p.2">TBD: come up with guidelines according to <a href="#RFC5226">[RFC5226]</a></p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#sec" id="sec">Security Considerations</a></h1>
+<h1 id="rfc.references"><a href="#rfc.references">6.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">6.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC5226">[RFC5226]</b>
+      </td>
+      <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, DOI 10.17487/RFC5226, May 2008.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">6.2.</a> Informative References</h1>
 <table>
   <tbody>
     <tr>
@@ -395,6 +419,12 @@ address {
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC6824">[RFC6824]</b>
+      </td>
+      <td class="top"><a>Ford, A.</a>, <a>Raiciu, C.</a>, <a>Handley, M.</a> and <a>O. Bonaventure</a>, "<a href="http://tools.ietf.org/html/rfc6824">TCP Extensions for Multipath Operation with Multiple Addresses</a>", RFC 6824, DOI 10.17487/RFC6824, January 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC7413">[RFC7413]</b>
       </td>
       <td class="top"><a>Cheng, Y.</a>, <a>Chu, J.</a>, <a>Radhakrishnan, S.</a> and <a>A. Jain</a>, "<a href="http://tools.ietf.org/html/rfc7413">TCP Fast Open</a>", RFC 7413, DOI 10.17487/RFC7413, December 2014.</td>
@@ -407,7 +437,6 @@ address {
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#examples" id="examples">Examples</a></h1>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
