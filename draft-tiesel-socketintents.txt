@@ -1,0 +1,224 @@
+
+
+
+
+TAPS Working Group                                             P. Tiesel
+Internet-Draft                                               T. Enghardt
+Intended status: Informational            Berlin Institute of Technology
+Expires: December 3, 2017                                  June 01, 2017
+
+
+                             Socket Intents
+                   draft-tiesel-socketintents-latest
+
+Abstract
+
+   Lorem Ipsum Todo
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on December 3, 2017.
+
+Copyright Notice
+
+   Copyright (c) 2017 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 1]
+
+Internet-Draft                SocketIntents                    June 2017
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Problem Statement . . . . . . . . . . . . . . . . . . . .   3
+     1.2.  Notational Conventions  . . . . . . . . . . . . . . . . .   3
+   2.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
+   3.  Informative References  . . . . . . . . . . . . . . . . . . .   3
+   Appendix A.  Examples . . . . . . . . . . . . . . . . . . . . . .   4
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
+
+1.  Introduction
+
+   Despite the advances in the transport area, the adaption of new
+   transport protocols and transport protocol features is slow and only
+   happens in limited domains (primarily in the Web browser and within
+   datacenters).  The problem occurs for taking advantage of multiple
+   access networks or provisioning domains (PvDs) available.  In both
+   cases, the benefits of this new transport diversity comes at the cost
+   of increased complexity that has to be mastered by the application
+   programmer.
+
+   Enabling features like TCP fast open [RFC7413] or controlling how
+   MPTCP should create subflows requires a specialized APIs that are not
+   part of the standard socket API, often require deep knowledge of the
+   transport protocol internals and, are not portable across operating
+   systems (OSes).
+
+   Applications that want to use multiple interfaces usually have to use
+   their own heuristics to select which access network to use.  Choosing
+   the right interface is difficult as their characteristics differ,
+   e.g. in terms of performance, and obtaining the necessary information
+   is often not easy since it may require special privileges and differs
+   heavily by OS.
+
+   In all cases mentioned above, an application that wants to take
+   advantage of new functionally is faced with substantially higher
+   complexity regarding network APIs and the whole networking code.
+
+   This document proposes the use of Socket Intents, a concept that
+   allows applications to share its knowledge about upcoming
+   communication and express its performance preferences in an abstract,
+   portable and best-effort way.  Socket Intents enable the OS to stem
+   against the complexity and make new transport protocols and features
+   available to a larger user base.
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 2]
+
+Internet-Draft                SocketIntents                    June 2017
+
+
+1.1.  Problem Statement
+
+   Application programmers opening a communication channel typically
+   know how this channel will be used.  Beside the hard requirements
+   already necessary for establishing the communication channels, e.g.,
+   reliable in-order stream transport, there is more information
+   available: An application developer has an intuition about
+   optimization preferences, e.g., optimize for bandwidth, latency, or
+   cost, expectations, e.g.  towards data loss, and may also know
+   specifics like how many bytes will be send or received.
+
+   These information does not directly map to the choice of a transport
+   protocol, to certain protocol parameters nor which PvD to use, but
+   the information can imply that the application can benefit from
+   certain transport options or help to choose between multiple PvD as
+   described in [RFC7556], Section 6.2, and therefore enable the OS to
+   adjust its defaults for this communication channel accordingly.
+
+   The preferences, expectations and other information known about the
+   upcoming communication should be expressed in an intuitive, abstract
+   way independent of the network- and transport protocol.  Its
+   representation should be independent of the actual API used for
+   network communication, e.g., these should be expressible in whatever
+   API available, e.g., as socketopts for BSD sockets or ??? for Post
+   Sockets [I-D.trammell-post-sockets].  Finally, given the expectations
+   and external constrains known, the OS should care about them in an
+   best-effort fashion and therefore try to choose the best transport
+   protocol, default parameters and PvDs available and may try to
+   further optimize based on them.
+
+1.2.  Notational Conventions
+
+   The words "MUST", "MUST NOT", "SHOULD", and "MAY" are used in this
+   document.  It's not shouting; when these words are capitalized, they
+   have a special meaning as defined in [RFC2119].
+
+2.  Security Considerations
+
+3.  Informative References
+
+   [I-D.pauly-taps-guidelines]
+              Pauly, T., "Software Guidelines for Protocol Evolution",
+              draft-pauly-taps-guidelines-00 (work in progress),
+              February 2017.
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 3]
+
+Internet-Draft                SocketIntents                    June 2017
+
+
+   [I-D.trammell-post-sockets]
+              Trammell, B., Perkins, C., Pauly, T., and M. Kuehlewind,
+              "Post Sockets, An Abstract Programming Interface for the
+              Transport Layer", draft-trammell-post-sockets-00 (work in
+              progress), October 2016.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
+
+   [RFC7413]  Cheng, Y., Chu, J., Radhakrishnan, S., and A. Jain, "TCP
+              Fast Open", RFC 7413, DOI 10.17487/RFC7413, December 2014,
+              <http://www.rfc-editor.org/info/rfc7413>.
+
+   [RFC7556]  Anipko, D., Ed., "Multiple Provisioning Domain
+              Architecture", RFC 7556, DOI 10.17487/RFC7556, June 2015,
+              <http://www.rfc-editor.org/info/rfc7556>.
+
+Appendix A.  Examples
+
+Authors' Addresses
+
+   Philipp S. Tiesel
+   Berlin Institute of Technology
+   Marchstr. 23
+   Berlin
+   Germany
+
+   Email: philipp@inet.tu-berlin.de
+
+
+   Theresa Enghardt
+   Berlin Institute of Technology
+   Marchstr. 23
+   Berlin
+   Germany
+
+   Email: theresa@inet.tu-berlin.de
+
+
+
+
+
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 4]
