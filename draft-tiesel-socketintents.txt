@@ -13,16 +13,19 @@ Expires: December 3, 2017                                  June 01, 2017
 
 Abstract
 
-   This document outlines an API independent a concept that allows
-   applications to share its knowledge about upcoming communication and
-   express its performance preferences in a portable and abstract way:
-   Socket Intents.  The information provided by Socket Intents SHOULD be
-   taken into account by the network stack in a best-effort way.
+   This document outlines an API-independent concept that allows
+   applications to share their knowledge about upcoming communication
+   and express their performance preferences in a portable and abstract
+   way: Socket Intents.  Socket Intents express what an application
+   knows, assumes, expects or wants to prioritize regarding its own
+   network communication.  The information provided by Socket Intents
+   should be taken into account by the network stack in a best-effort
+   way.
 
-   Socket Intent can be used to stem against the complexity and make the
-   use of multiple provisioning domains as well as new transport
-   protocols and features available to a larger user base by expressing
-   the applications intents in an abstract and portable way.
+   Socket Intent can be used to stem against the complexity and make use
+   of multiple provisioning domains as well as new transport protocols
+   and features available to a larger user base by expressing the
+   applications intents in an abstract and portable way.
 
 Status of This Memo
 
@@ -46,10 +49,7 @@ Copyright Notice
    Copyright (c) 2017 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
+
 
 
 
@@ -58,6 +58,10 @@ Tiesel & Enghardt       Expires December 3, 2017                [Page 1]
 Internet-Draft                SocketIntents                    June 2017
 
 
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
@@ -66,46 +70,42 @@ Internet-Draft                SocketIntents                    June 2017
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-     1.1.  Problem Statement . . . . . . . . . . . . . . . . . . . .   3
-     1.2.  Notational Conventions  . . . . . . . . . . . . . . . . .   4
-   2.  General Concept . . . . . . . . . . . . . . . . . . . . . . .   4
-     2.1.  Interactions between Socket Intents and QoS . . . . . . .   4
-   3.  Usage examples  . . . . . . . . . . . . . . . . . . . . . . .   4
-   4.  Initial Socket Intent Types . . . . . . . . . . . . . . . . .   5
-     4.1.  Flow Category . . . . . . . . . . . . . . . . . . . . . .   5
-     4.2.  Object Size to be Sent / Received . . . . . . . . . . . .   6
-     4.3.  Flow Duration . . . . . . . . . . . . . . . . . . . . . .   6
-     4.4.  Stream Bitrate Sent / Received  . . . . . . . . . . . . .   6
-     4.5.  Burstiness  . . . . . . . . . . . . . . . . . . . . . . .   6
-     4.6.  Timeliness  . . . . . . . . . . . . . . . . . . . . . . .   6
-     4.7.  Application Resilience  . . . . . . . . . . . . . . . . .   6
-     4.8.  Cost Preferences  . . . . . . . . . . . . . . . . . . . .   7
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   8
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   8
+   1.  Conventions and Definitions . . . . . . . . . . . . . . . . .   2
+   2.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  Problem Statement . . . . . . . . . . . . . . . . . . . . . .   3
+   4.  General Concept . . . . . . . . . . . . . . . . . . . . . . .   4
+     4.1.  Interactions between Socket Intents and QoS . . . . . . .   4
+   5.  Initial Socket Intent Types . . . . . . . . . . . . . . . . .   4
+     5.1.  Flow Category . . . . . . . . . . . . . . . . . . . . . .   4
+     5.2.  Object Size to be Sent / Received . . . . . . . . . . . .   5
+     5.3.  Flow Duration . . . . . . . . . . . . . . . . . . . . . .   5
+     5.4.  Stream Bitrate Sent / Received  . . . . . . . . . . . . .   6
+     5.5.  Burstiness  . . . . . . . . . . . . . . . . . . . . . . .   6
+     5.6.  Timeliness  . . . . . . . . . . . . . . . . . . . . . . .   7
+     5.7.  Application Resilience  . . . . . . . . . . . . . . . . .   7
+     5.8.  Cost Preferences  . . . . . . . . . . . . . . . . . . . .   8
+   6.  Implementation Guidelines . . . . . . . . . . . . . . . . . .   8
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   9.  Usage examples  . . . . . . . . . . . . . . . . . . . . . . .   9
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .   9
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  10
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
-1.  Introduction
+1.  Conventions and Definitions
 
-   Despite the advances in the transport area, the adaption of new
+   The words "MUST", "MUST NOT", "SHALL", "SHALL NOT", "SHOULD", and
+   "MAY" are used in this document.  It's not shouting; when these words
+   are capitalized, they have a special meaning as defined in [RFC2119].
+
+   Default values in Section 5 are marked with an asterisk (*).
+
+2.  Introduction
+
+   Despite recent advances in the transport area, the adaption of new
    transport protocols and transport protocol features is slow and only
    happens in limited domains (primarily in the Web browser and within
-   datacenters).  The problem occurs for taking advantage of multiple
-   access networks or provisioning domains (PvDs) available.  In both
-   cases, the benefits of this new transport diversity comes at the cost
-   of increased complexity that has to be mastered by the application
-   programmer.
-
-   Enabling features like TCP fast open [RFC7413] or controlling how
-   MPTCP [RFC6824] creates subflows requires a specialized APIs that are
-   not part of the standard socket API, often require deep knowledge of
-   the transport protocol internals and, are not portable across
-   different implementations.
-
-
 
 
 
@@ -114,19 +114,31 @@ Tiesel & Enghardt       Expires December 3, 2017                [Page 2]
 Internet-Draft                SocketIntents                    June 2017
 
 
-   Applications that want to use multiple interfaces usually have to use
-   their own heuristics to select which access network to use.  Choosing
-   the right interface is difficult as their characteristics differ,
-   e.g. in terms of performance, and obtaining the necessary information
-   is often not easy since it may require special privileges and differs
-   heavily by implementations.
+   datacenters).  The same problem occurs for taking advantage of
+   multiple available access networks or provisioning domains (PvDs).
+   In both cases, the benefits of the new transport diversity comes at
+   the cost of an increased complexity that has to be mastered by the
+   application programmer.
+
+   Enabling features like TCP fast open [RFC7413] or controlling how
+   MPTCP [RFC6824] creates subflows requires specialized APIs that are
+   not part of the standard socket API, often require deep knowledge of
+   the transport protocol internals, and are not portable across
+   different implementations.
+
+   Applications that want to use multiple network interfaces usually
+   have to use their own heuristics to select which access network to
+   use.  Choosing the right interface is difficult as their
+   characteristics differ, e.g. in terms of performance, and obtaining
+   the necessary information is often not easy since it may require
+   special privileges and differs heavily by implementation.
 
    In all cases mentioned above, an application that wants to take
-   advantage of the transport diversity available is faced with
-   substantially higher complexity regarding network APIs and the whole
-   networking code.
+   advantage of the available transport diversity is faced with
+   substantially higher complexity regarding network APIs and networking
+   code.
 
-1.1.  Problem Statement
+3.  Problem Statement
 
    Application programmers opening a communication channel typically
    know how this channel will be used.  Beside the hard requirements
@@ -134,34 +146,22 @@ Internet-Draft                SocketIntents                    June 2017
    reliable in-order stream transport, there is more information
    available: An application developer has an intuition about
    optimization preferences, e.g., optimize for bandwidth, latency, or
-   cost, expectations, e.g.  towards data loss, and may also know
-   specifics like how many bytes will be send or received.
+   cost, about expectations, e.g.  towards data loss, and possibly also
+   about specifics, such as how many bytes will be sent or received.
 
-   These information does not directly map to the choice of a transport
-   protocol, to certain protocol parameters nor which PvD to use, but
-   the information can imply that the application can benefit from
+   This information does not directly map to the choice of a transport
+   protocol, to certain protocol parameters, nor to which PvD to use,
+   but the information can imply that the application can benefit from
    certain transport options or help to choose between multiple PvD as
    described in [RFC7556], Section 6.2, and therefore enable the OS to
    adjust its defaults for this communication channel accordingly.
 
    The preferences, expectations and other information known about the
-   upcoming communication SHOULD be expressible in an intuitive,
-   abstract
+   upcoming communication MAY be expressible in an intuitive, abstract
    way independent of the network- and transport protocol.  Its
    representation SHOULD be independent of the actual API used for
    network communication, e.g., these SHOULD be expressible in whatever
    API available, e.g., as "socketopts" for BSD sockets or as part of
-   the address resolution configuration for Post Sockets
-   [I-D.trammell-post-sockets].  Finally, given the expectations and
-   external constrains known, the OS SHOULD use the information provided
-   via Socket Intents in an best-effort fashion and therefore try to
-   choose the best transport protocol, default parameters and PvDs
-   available and may try to further optimize based on them.
-
-
-
-
-
 
 
 
@@ -170,15 +170,16 @@ Tiesel & Enghardt       Expires December 3, 2017                [Page 3]
 Internet-Draft                SocketIntents                    June 2017
 
 
-1.2.  Notational Conventions
+   the address resolution configuration for Post Sockets
+   [I-D.trammell-post-sockets].  Finally, given the expectations and
+   external constraints known, the OS SHOULD use the information
+   provided via Socket Intents in an best-effort fashion and therefore
+   try to choose the best transport protocol, default parameters and
+   PvDs available and MAY try to further optimize based on them.
 
-   The words "MUST", "MUST NOT", "SHALL", "SHALL NOT", "SHOULD", and
-   "MAY" are used in this document.  It's not shouting; when these words
-   are capitalized, they have a special meaning as defined in [RFC2119].
+4.  General Concept
 
-2.  General Concept
-
-   With Socket Intents, applications SHOULD express their communication
+   With Socket Intents, applications MAY express their communication
    preferences in order to take advantage of the available transfer
    diversity.  Depending on the API used, Socket Intents can be used on
    a per association, connection, stream, or packet level.  TODO: Link
@@ -186,7 +187,7 @@ Internet-Draft                SocketIntents                    June 2017
    characteristics, e.g., low delay or high throughput, stable transport
    or minimal cost, and is optional information.
 
-2.1.  Interactions between Socket Intents and QoS
+4.1.  Interactions between Socket Intents and QoS
 
    Socket Intents are not QoS labels, but have an orthogonal meaning.
 
@@ -199,40 +200,10 @@ Internet-Draft                SocketIntents                    June 2017
       and MAY be used to derive DiffServ Service Classes as described in
       [RFC4594].
 
-3.  Usage examples
-
-   o  Consider a cellphone performing a minor os feature update.
-      This process usually implies downloading a large file.  This is a
-      bulk transfer for which the application may already know the file
-      size.  Timing is typically noncritical and the data can be
-      downloaded as background traffic with minimal cost and power
-      overhead.  It would not hurt if the TCP connection was closed
-      during the transfer as the download can be continued.  For this
-      connection the application can set the general category bulk
-      transfer.  Additional information provided can be file size,
-      timeliness, and resilience.
-
-   o  Considering a user watching non-live video content.  This usually
-      means fetching a stream of video chunks.  The application should
-      know the size of each chunk and may know the bitrate and the
-      duration of each chunk and the whole video.  Disconnection of the
-      TCP connection should be avoided because that might have an effect
-      that is visible to the user.  It can put this connection into the
-
-
-
-Tiesel & Enghardt       Expires December 3, 2017                [Page 4]
-
-Internet-Draft                SocketIntents                    June 2017
-
-
-      general category "stream transfer" with additional information
-      about duration, bitrate and resilience.
-
-4.  Initial Socket Intent Types
+5.  Initial Socket Intent Types
 
    The following sections contain a list or Socket Intent types and
-   their possible values.  Each Intent type has a Name, a data type
+   their possible values.  Each Intent type has a name, a data type
    (Enum, Int or Float) and a description when it SHOULD be used.
    Socket Intents with enum data type also have a list of valid values
    and their description.
@@ -241,12 +212,19 @@ Internet-Draft                SocketIntents                    June 2017
    Names of experimental Socket Intent types MUST start with "x-" and
    SHALL NOT be managed by the IANA.
 
-4.1.  Flow Category
+5.1.  Flow Category
 
    The flow category describes the dominating traffic pattern of the
    respective communication unit expected by the application.
 
    Short name:  flowtype
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 4]
+
+Internet-Draft                SocketIntents                    June 2017
+
 
    Applicability:  Association, Connection, Stream
 
@@ -273,6 +251,28 @@ Internet-Draft                SocketIntents                    June 2017
       suggesting the use of the Object Size intents or the stream
       category suggesting the Stream Bitrate and Flow Duration intents.
 
+5.2.  Object Size to be Sent / Received
+
+   This Intent is used to communicate the expected size of a transfer.
+
+   Short name:  sndobjsz / recvobjsz
+
+   Applicability:  Association, Connection, Stream, Object
+
+   Data type:  Int (bytes)
+
+5.3.  Flow Duration
+
+   This Intent is used to communicate the expected lifetime of the
+   respective communication unit.
+
+   Short name:  duration
+
+   Applicability:  Association, Connection, Stream
+
+   Data type:  Int (msec)
+
+
 
 
 
@@ -282,23 +282,10 @@ Tiesel & Enghardt       Expires December 3, 2017                [Page 5]
 Internet-Draft                SocketIntents                    June 2017
 
 
-4.2.  Object Size to be Sent / Received
+5.4.  Stream Bitrate Sent / Received
 
-   Short name:  sndobjsz / recvobjsz
-
-   Applicability:  Association, Connection, Stream, Object
-
-   Data type:  Int (bytes)
-
-4.3.  Flow Duration
-
-   Short name:  duration
-
-   Applicability:  Association, Connection, Stream
-
-   Data type:  Int (msec)
-
-4.4.  Stream Bitrate Sent / Received
+   This Intent is used to communicate the bitrate of the respective
+   communication unit.
 
    Short name:  sndrate / recvrate
 
@@ -306,7 +293,18 @@ Internet-Draft                SocketIntents                    June 2017
 
    Data type:  Int (bytes/sec)
 
-4.5.  Burstiness
+5.5.  Burstiness
+
+   This Intent describes the anticipated sender-side burst
+   characteristics of the traffic for this communication unit.  It
+   expresses how the traffic sent by the application is expected to vary
+   over time, and, consequently, how long sequences of consecutively
+   sent packets will be.  Note that the actual burst characteristics of
+   the traffic at the receiver side will depend on the network.
+
+   This Intent can provide hints to the application on what the resource
+   usage pattern for this communication unit will look like, which can
+   be useful for balancing the requirements of different application.
 
    Short name:  burst
 
@@ -314,7 +312,39 @@ Internet-Draft                SocketIntents                    June 2017
 
    Data type:  Enum
 
-4.6.  Timeliness
+   +----------------+--------------------------------------------------+
+   | Level          | Description                                      |
+   +----------------+--------------------------------------------------+
+   | no_bursts      | Application sends traffic at a constant rate     |
+   |                |                                                  |
+   | regular_bursts | Application sends bursts of traffic periodically |
+   |                |                                                  |
+   | random_bursts  | Application sends bursts of traffic irregularly  |
+   |                |                                                  |
+   | bulk           | Application sends a bulk of traffic              |
+   |                |                                                  |
+   | mixed*         | Don't know or none of the above                  |
+   +----------------+--------------------------------------------------+
+
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 6]
+
+Internet-Draft                SocketIntents                    June 2017
+
+
+5.6.  Timeliness
+
+   This Intent describes the desired delay characteristics for this
+   communication unit.  It provides hints for the OS whether to optimize
+   for low delay or for other criteria.  There are no hard requirements
+   or implied guarantees on whether these requirements can actually be
+   satisfied.
 
    Short name:  timeliness
 
@@ -322,7 +352,28 @@ Internet-Draft                SocketIntents                    June 2017
 
    Data type:  Enum
 
-4.7.  Application Resilience
+   +-------------+-----------------------------------------------------+
+   | Level       | Description                                         |
+   +-------------+-----------------------------------------------------+
+   | stream      | Delay and packet delay variation should be kept as  |
+   |             | low as possible                                     |
+   |             |                                                     |
+   | interactive | Delay should be kept as low as possible, but some   |
+   |             | variation is tolerable                              |
+   |             |                                                     |
+   | transfer*   | Delay and packet delay variation souls be           |
+   |             | reasonable, but are not critical                    |
+   |             |                                                     |
+   | background  | Delay and packet delay variation is no concern      |
+   +-------------+-----------------------------------------------------+
+
+5.7.  Application Resilience
+
+   This Intent describes how an application deals with disruption of its
+   communication, e.g. connection loss.  It communicates how well the
+   application can recover from such disturbance and can have
+   implications on how many resources the OS should allocate to failover
+   techniques for this particular communication unit.
 
    Short name:  resilience
 
@@ -333,12 +384,29 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 6]
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 7]
 
 Internet-Draft                SocketIntents                    June 2017
 
 
-4.8.  Cost Preferences
+   +-------------+-----------------------------------------------------+
+   | Level       | Description                                         |
+   +-------------+-----------------------------------------------------+
+   | sensitive*  | Disruptions result in application failure,          |
+   |             | disrupting user experience                          |
+   |             |                                                     |
+   | recoverable | Disruptions are inconvenient for the application,   |
+   |             | but can be recovered from                           |
+   |             |                                                     |
+   | resilient   | Disruptions have minimal impact for the application |
+   +-------------+-----------------------------------------------------+
+
+5.8.  Cost Preferences
 
    This describes the Intents of an Application towards costs cased by
    the respective communication unit.  It should guide the OS how to
@@ -366,22 +434,9 @@ Internet-Draft                SocketIntents                    June 2017
    |               | other criteria                                    |
    +---------------+---------------------------------------------------+
 
-5.  IANA Considerations
+6.  Implementation Guidelines
 
-   New Socket Intents types should be managed by the IANA.
-
-   TBD: come up with guidelines according to [RFC5226]
-
-6.  Security Considerations
-
-   We assume that applications specify their preferences in a selfish,
-   but not malicious way and that it is up to the policy to find a
-   compromise between demands.  T herefore, selfish behavior does not
-   hurt other applications as it would with prioritization.
-
-7.  References
-
-7.1.  Normative References
+   TBD
 
 
 
@@ -389,17 +444,69 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 7]
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 8]
 
 Internet-Draft                SocketIntents                    June 2017
 
+
+7.  Security Considerations
+
+   We assume that applications specify their preferences in a selfish,
+   but not malicious way and that it is up to the OS to find a
+   compromise between demands.  Therefore, selfish behavior does not
+   hurt other applications as it would with prioritization.
+
+   TODO: elaborate
+
+8.  IANA Considerations
+
+   Socket Intents types in addition to those described in Section 5
+   SHALL be managed by the IANA.
+
+   TBD: come up with guidelines according to [RFC5226]
+
+9.  Usage examples
+
+   o  Consider a cellphone performing a minor os feature update.  This
+      process usually implies downloading a large file.  This is a bulk
+      transfer for which the application may already know the file size.
+      Timing is typically noncritical and the data can be downloaded as
+      background traffic with minimal cost and power overhead.  It would
+      not hurt if the TCP connection was closed during the transfer as
+      the download can be continued.  For this connection the
+      application can set the general category bulk transfer.
+      Additional information provided can be file size, timeliness, and
+      resilience.
+
+   o  Considering a user watching non-live video content.  This usually
+      means fetching a stream of video chunks.  The application should
+      know the size of each chunk and may know the bitrate and the
+      duration of each chunk and the whole video.  Disconnection of the
+      TCP connection should be avoided because that might have an effect
+      that is visible to the user.  It can put this connection into the
+      general category "stream transfer" with additional information
+      about duration, bitrate and resilience.
+
+10.  References
+
+10.1.  Normative References
 
    [RFC5226]  Narten, T. and H. Alvestrand, "Guidelines for Writing an
               IANA Considerations Section in RFCs", BCP 26, RFC 5226,
               DOI 10.17487/RFC5226, May 2008,
               <http://www.rfc-editor.org/info/rfc5226>.
 
-7.2.  Informative References
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017                [Page 9]
+
+Internet-Draft                SocketIntents                    June 2017
+
+
+10.2.  Informative References
 
    [I-D.pauly-taps-guidelines]
               Pauly, T., "Software Guidelines for Protocol Evolution",
@@ -437,19 +544,6 @@ Internet-Draft                SocketIntents                    June 2017
 
 Authors' Addresses
 
-
-
-
-
-
-
-
-
-Tiesel & Enghardt       Expires December 3, 2017                [Page 8]
-
-Internet-Draft                SocketIntents                    June 2017
-
-
    Philipp S. Tiesel
    Berlin Institute of Technology
    Marchstr. 23
@@ -457,6 +551,15 @@ Internet-Draft                SocketIntents                    June 2017
    Germany
 
    Email: philipp@inet.tu-berlin.de
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017               [Page 10]
+
+Internet-Draft                SocketIntents                    June 2017
 
 
    Theresa Enghardt
@@ -501,4 +604,13 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 9]
+
+
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 3, 2017               [Page 11]
