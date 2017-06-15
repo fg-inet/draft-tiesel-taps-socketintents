@@ -1,7 +1,7 @@
 ---
 title: Socket Intents
 abbrev: SocketIntents
-docname: draft-tiesel-socketintents-latest
+docname: draft-tiesel-taps-socketintents-latest
 date: 2017-06-15
 category: exp
 
@@ -42,8 +42,8 @@ informative:
   RFC7413:
   RFC7556:
   I-D.pauly-taps-guidelines:
-  I-D.trammell-post-sockets:
-  I-D.tiesel-communitgrany:
+  I-D.trammell-taps-post-sockets:
+  I-D.tiesel-taps-communitgrany:
     title: "Communication Units Granularity Considerations for using Transport Diversity or Multiple Provisioning Domains"
     date: 2017-07
     author:
@@ -54,7 +54,7 @@ informative:
         name: Theresa Enghardt
         ins: T. Enghardt
     seriesinfo:
-      Work in Progress, will be published soon
+      draft-tiesel-taps-communitgrany-00 (work in progress)
   DASH:
       author:
         org: International Organization for Standardization
@@ -92,7 +92,7 @@ The words "MUST", "MUST NOT", "SHALL", "SHALL NOT", "SHOULD", and
 words are capitalized, they have a special meaning as defined
 in {{RFC2119}}.
 
-Flow, Association, Stream, or Object are used as defined in {{I-D.tiesel-communitgrany}}:
+Flow, Association, Stream, or Object are used as defined in {{I-D.tiesel-taps-communitgrany}}:
 
 
 
@@ -155,7 +155,7 @@ Its representation SHOULD be independent of the actual API used for
 network communication, e.g., these SHOULD be expressible
 in whatever API available, e.g., as "socketopts" for BSD sockets or
 as part of the address resolution configuration for
-[Post Sockets](#I-D.trammell-post-sockets).
+[Post Sockets](#I-D.trammell-taps-post-sockets).
 Finally, given the expectations and external constraints known, the OS
 SHOULD use the information provided via Socket Intents in an best-effort
 fashion and therefore try to choose the best transport protocol, default

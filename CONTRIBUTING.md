@@ -20,12 +20,12 @@ subject to a Simplified BSD License) in Contributions.
 ## Other Resources
 
 Discussion of this work occurs on the
-[socketintents.xml working group mailing list](https://mailarchive.ietf.org/arch/browse/socketintents.xml/)
-([subscribe](https://www.ietf.org/mailman/listinfo/socketintents.xml)).  In addition to
+[taps working group mailing list](https://mailarchive.ietf.org/arch/browse/taps/)
+([subscribe](https://www.ietf.org/mailman/listinfo/taps)).  In addition to
 contributions in github, you are encouraged to participate in discussions there.
 
 **Note**: Some working groups adopt a policy whereby substantive discussion of
 technical issues needs to occur on the mailing list.
 
 You might also like to familiarize yourself with other
-[working group documents](https://datatracker.ietf.org/wg/socketintents.xml/documents/).
+[working group documents](https://datatracker.ietf.org/wg/taps/documents/).

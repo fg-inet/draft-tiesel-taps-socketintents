@@ -3,8 +3,8 @@
 This is the working area for the Individual internet-draft, "Socket Intents".
 
 * [Editor's copy](https://git@gitlab.inet.tu-berlin.de:muacc.github.io/ietf-2017-socketintents/)
-* [Individual Draft](https://tools.ietf.org/html/draft-tiesel-socketintents)
-* [Compare Individual Draft and Editor's copy](https://tools.ietf.org/rfcdiff?url1=https://tools.ietf.org/id/draft-tiesel-socketintents.txt&url2=https://git@gitlab.inet.tu-berlin.de:muacc.github.io/ietf-2017-socketintents/draft-tiesel-socketintents.txt)
+* [Individual Draft](https://tools.ietf.org/html/draft-tiesel-taps-socketintents)
+* [Compare Individual Draft and Editor's copy](https://tools.ietf.org/rfcdiff?url1=https://tools.ietf.org/id/draft-tiesel-taps-socketintents.txt&url2=https://git@gitlab.inet.tu-berlin.de:muacc.github.io/ietf-2017-socketintents/draft-tiesel-taps-socketintents.txt)
 
 
 ## Building the Draft
