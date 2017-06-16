@@ -5,11 +5,11 @@
 TAPS Working Group                                             P. Tiesel
 Internet-Draft                                               T. Enghardt
 Intended status: Experimental             Berlin Institute of Technology
-Expires: December 3, 2017                                  June 01, 2017
+Expires: December 17, 2017                                 June 15, 2017
 
 
                              Socket Intents
-                   draft-tiesel-socketintents-latest
+                 draft-tiesel-taps-socketintents-latest
 
 Abstract
 
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 3, 2017.
+   This Internet-Draft will expire on December 17, 2017.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 1]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 1]
 
 Internet-Draft                SocketIntents                    June 2017
 
@@ -91,11 +91,14 @@ Table of Contents
      6.3.  Example 3 . . . . . . . . . . . . . . . . . . . . . . . .  10
    7.  Implementation Guidelines . . . . . . . . . . . . . . . . . .  10
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  11
+     8.1.  Performance Degradation Attacks . . . . . . . . . . . . .  11
+     8.2.  Information Leakage . . . . . . . . . . . . . . . . . . .  11
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  11
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
+   10. Publications History  . . . . . . . . . . . . . . . . . . . .  11
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .  12
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  12
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Conventions and Definitions
 
@@ -103,16 +106,16 @@ Table of Contents
    "MAY" are used in this document.  It's not shouting; when these words
    are capitalized, they have a special meaning as defined in [RFC2119].
 
-   Flow, Association, Stream, or Object are used as defined in
-   [I-D.tiesel-communitgrany].
 
 
 
-
-Tiesel & Enghardt       Expires December 3, 2017                [Page 2]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 2]
 
 Internet-Draft                SocketIntents                    June 2017
 
+
+   Flow, Association, Stream, or Object are used as defined in
+   [I-D.tiesel-taps-communitgrany]:
 
 2.  Introduction
 
@@ -158,17 +161,17 @@ Internet-Draft                SocketIntents                    June 2017
    protocol, to certain protocol parameters, nor to which PvD to use,
    but the information can imply that the application can benefit from
    certain transport options or help to choose between multiple PvD as
-   described in [RFC7556], Section 6.2, and therefore enable the OS to
-   adjust its defaults for this communication channel accordingly.
 
 
 
 
-
-Tiesel & Enghardt       Expires December 3, 2017                [Page 3]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 3]
 
 Internet-Draft                SocketIntents                    June 2017
 
+
+   described in [RFC7556], Section 6.2, and therefore enable the OS to
+   adjust its defaults for this communication channel accordingly.
 
    The preferences, expectations and other information known about the
    upcoming communication MAY be expressible in an intuitive, abstract
@@ -177,8 +180,8 @@ Internet-Draft                SocketIntents                    June 2017
    network communication, e.g., these SHOULD be expressible in whatever
    API available, e.g., as "socketopts" for BSD sockets or as part of
    the address resolution configuration for Post Sockets
-   [I-D.trammell-post-sockets].  Finally, given the expectations and
-   external constraints known, the OS SHOULD use the information
+   [I-D.trammell-taps-post-sockets].  Finally, given the expectations
+   and external constraints known, the OS SHOULD use the information
    provided via Socket Intents in an best-effort fashion and therefore
    try to choose the best transport protocol, default parameters and
    PvDs available and MAY try to further optimize based on them.
@@ -218,10 +221,7 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-
-
-
-Tiesel & Enghardt       Expires December 3, 2017                [Page 4]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 4]
 
 Internet-Draft                SocketIntents                    June 2017
 
@@ -277,7 +277,7 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 5]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 5]
 
 Internet-Draft                SocketIntents                    June 2017
 
@@ -333,7 +333,7 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 6]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 6]
 
 Internet-Draft                SocketIntents                    June 2017
 
@@ -389,7 +389,7 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 7]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 7]
 
 Internet-Draft                SocketIntents                    June 2017
 
@@ -445,7 +445,7 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 8]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 8]
 
 Internet-Draft                SocketIntents                    June 2017
 
@@ -501,7 +501,7 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017                [Page 9]
+Tiesel & Enghardt       Expires December 17, 2017               [Page 9]
 
 Internet-Draft                SocketIntents                    June 2017
 
@@ -557,12 +557,14 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-Tiesel & Enghardt       Expires December 3, 2017               [Page 10]
+Tiesel & Enghardt       Expires December 17, 2017              [Page 10]
 
 Internet-Draft                SocketIntents                    June 2017
 
 
 8.  Security Considerations
+
+8.1.  Performance Degradation Attacks
 
    We assume that applications specify their preferences in a selfish,
    but not malicious way and that it is up to the OS to find a
@@ -579,6 +581,17 @@ Internet-Draft                SocketIntents                    June 2017
    specified with the traffic actually generated and notify the user if
    the usage of Socket Intents is unusual or defective.
 
+8.2.  Information Leakage
+
+   Varying the transport or IP layer parameters of packets belonging to
+   different Streams or Objects multiplexed in the same encrypted
+   association might enable an attacker to gain some ground truth about
+   the shares of different kinds of traffic.  As this might also be
+   implied by packet timings, application developers might weight the
+   small additional information disclosure against the possible
+   performance gains.  Using Socket Intents on Association level can be
+   considered safe.
+
 9.  IANA Considerations
 
    The Socket Intents type namespace SHOULD be managed by the IANA
@@ -586,9 +599,28 @@ Internet-Draft                SocketIntents                    June 2017
    Section 4.1, the initial types for the registry are described in
    Section 5.
 
-10.  References
+10.  Publications History
 
-10.1.  Normative References
+   o  The original idea of Socket Intents was published in [CoNEXT2013].
+
+   o  A performance study "Socket Intents: OS Support for Using Multiple
+      Access Networks and its Benefits for Web Browsing" is under
+      submission.
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 17, 2017              [Page 11]
+
+Internet-Draft                SocketIntents                    June 2017
+
+
+11.  References
+
+11.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -600,7 +632,13 @@ Internet-Draft                SocketIntents                    June 2017
               DOI 10.17487/RFC5226, May 2008,
               <http://www.rfc-editor.org/info/rfc5226>.
 
-10.2.  Informative References
+11.2.  Informative References
+
+   [CoNEXT2013]
+              Schmidt, P., Enghardt, T., Khalili, R., and A. Feldmann,
+              "Socket intents", Proceedings of the ninth ACM conference
+              on Emerging networking experiments and technologies -
+              CoNEXT '13 , DOI 10.1145/2535372.2535405, 2013.
 
    [DASH]     International Organization for Standardization, "Dynamic
               adaptive streaming over HTTP (DASH) - Part 1: Media
@@ -608,32 +646,33 @@ Internet-Draft                SocketIntents                    June 2017
               ISO/IEC 23009-1:2014 , June 2011, <https://www.iso.org/
               standard/65274.html>.
 
-
-
-
-
-
-Tiesel & Enghardt       Expires December 3, 2017               [Page 11]
-
-Internet-Draft                SocketIntents                    June 2017
-
-
    [I-D.pauly-taps-guidelines]
               Pauly, T., "Software Guidelines for Protocol Evolution",
               draft-pauly-taps-guidelines-00 (work in progress),
               February 2017.
 
-   [I-D.tiesel-communitgrany]
+   [I-D.tiesel-taps-communitgrany]
               Tiesel, P. and T. Enghardt, "Communication Units
               Granularity Considerations for using Transport Diversity
-              or Multiple Provisioning Domains", Work in Progress ,
-              n.d..
+              or Multiple Provisioning Domains", draft-tiesel-taps-
+              communitgrany-00 (work in progress) , July 2017.
 
-   [I-D.trammell-post-sockets]
+   [I-D.trammell-taps-post-sockets]
               Trammell, B., Perkins, C., Pauly, T., and M. Kuehlewind,
               "Post Sockets, An Abstract Programming Interface for the
-              Transport Layer", draft-trammell-post-sockets-00 (work in
-              progress), October 2016.
+              Transport Layer", draft-trammell-taps-post-sockets-00
+              (work in progress), March 2017.
+
+
+
+
+
+
+
+Tiesel & Enghardt       Expires December 17, 2017              [Page 12]
+
+Internet-Draft                SocketIntents                    June 2017
+
 
    [RFC4594]  Babiarz, J., Chan, K., and F. Baker, "Configuration
               Guidelines for DiffServ Service Classes", RFC 4594,
@@ -668,12 +707,6 @@ Authors' Addresses
    Email: philipp@inet.tu-berlin.de
 
 
-
-Tiesel & Enghardt       Expires December 3, 2017               [Page 12]
-
-Internet-Draft                SocketIntents                    June 2017
-
-
    Theresa Enghardt
    Berlin Institute of Technology
    Marchstr. 23
@@ -692,37 +725,4 @@ Internet-Draft                SocketIntents                    June 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Tiesel & Enghardt       Expires December 3, 2017               [Page 13]
+Tiesel & Enghardt       Expires December 17, 2017              [Page 13]
