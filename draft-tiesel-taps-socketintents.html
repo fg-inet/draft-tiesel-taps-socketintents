@@ -23,13 +23,12 @@
     position: fixed;
     bottom: 0;
     right: 0;
-    right: calc(50vw - 500px);
+    right: calc(50vw - 525px);
     width: 300px;
-    padding: 0 1em;
     z-index: 1;
   }
   #rfc\.toc {
-    top: 16px;
+    top: 15px;
   }
   ul.toc {
     top: 80px;
@@ -37,8 +36,7 @@
   }
 
   body {
-    padding-left: 1.5em;
-    padding-right: 29em;
+    padding-right: 350px;
   }
 }
 
@@ -47,7 +45,7 @@ body {
   color: #333;
   font-size-adjust: 0.5;
   line-height: 130%;
-  margin: 2.5em auto;
+  margin: 25px auto;
   max-width: 724px;
 }
 
@@ -280,31 +278,34 @@ address {
 <link href="#rfc.section.1" rel="Chapter" title="1 Conventions and Definitions"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Introduction"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Problem Statement"/>
-<link href="#rfc.section.4" rel="Chapter" title="4 General Concept"/>
-<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Socket Intent Types"/>
-<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Interactions between Socket Intents and QoS"/>
-<link href="#rfc.section.5" rel="Chapter" title="5 Initial Socket Intent Types"/>
-<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Traffic Category"/>
-<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Object Size to be Sent / Received"/>
-<link href="#rfc.section.5.3" rel="Chapter" title="5.3 Duration"/>
-<link href="#rfc.section.5.4" rel="Chapter" title="5.4 Stream Bitrate Sent / Received"/>
-<link href="#rfc.section.5.5" rel="Chapter" title="5.5 Burstiness"/>
-<link href="#rfc.section.5.6" rel="Chapter" title="5.6 Timeliness"/>
-<link href="#rfc.section.5.7" rel="Chapter" title="5.7 Application Resilience"/>
-<link href="#rfc.section.5.8" rel="Chapter" title="5.8 Cost Preferences"/>
-<link href="#rfc.section.6" rel="Chapter" title="6 Usage examples"/>
-<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Example 1"/>
-<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Example 2"/>
-<link href="#rfc.section.6.3" rel="Chapter" title="6.3 Example 3"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Socket Intents Concept"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Interactions between Socket Intents and QoS"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Socket Intent Types"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Initial Socket Intent Types"/>
+<link href="#rfc.section.6.1" rel="Chapter" title="6.1 Traffic Category"/>
+<link href="#rfc.section.6.2" rel="Chapter" title="6.2 Size to be Sent / Received"/>
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 Duration"/>
+<link href="#rfc.section.6.4" rel="Chapter" title="6.4 Stream Bitrate Sent / Received"/>
+<link href="#rfc.section.6.5" rel="Chapter" title="6.5 Burstiness"/>
+<link href="#rfc.section.6.6" rel="Chapter" title="6.6 Timeliness"/>
+<link href="#rfc.section.6.7" rel="Chapter" title="6.7 Disruption Resilience"/>
+<link href="#rfc.section.6.8" rel="Chapter" title="6.8 Cost Preferences"/>
 <link href="#rfc.section.7" rel="Chapter" title="7 Implementation Guidelines"/>
 <link href="#rfc.section.8" rel="Chapter" title="8 Security Considerations"/>
 <link href="#rfc.section.8.1" rel="Chapter" title="8.1 Performance Degradation Attacks"/>
 <link href="#rfc.section.8.2" rel="Chapter" title="8.2 Information Leakage"/>
 <link href="#rfc.section.9" rel="Chapter" title="9 IANA Considerations"/>
-<link href="#rfc.section.10" rel="Chapter" title="10 Publications History"/>
+<link href="#rfc.section.10" rel="Chapter" title="10 Acknowledgements"/>
 <link href="#rfc.references" rel="Chapter" title="11 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="11.1 Normative References"/>
 <link href="#rfc.references.2" rel="Chapter" title="11.2 Informative References"/>
+<link href="#rfc.appendix.A" rel="Chapter" title="A Usage examples"/>
+<link href="#rfc.appendix.A.1" rel="Chapter" title="A.1 Example 1"/>
+<link href="#rfc.appendix.A.2" rel="Chapter" title="A.2 Example 2"/>
+<link href="#rfc.appendix.A.3" rel="Chapter" title="A.3 Example 3"/>
+<link href="#rfc.appendix.B" rel="Chapter" title="B Publications History"/>
+<link href="#rfc.appendix.C" rel="Chapter" title="C Changes"/>
+<link href="#rfc.appendix.C.1" rel="Chapter" title="C.1 Since -00"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -313,9 +314,9 @@ address {
 
   <meta name="dct.creator" content="Tiesel, P. and T. Enghardt" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-tiesel-taps-socketintents-latest" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-6-15" />
-  <meta name="dct.abstract" content="This document outlines an API-independent concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a portable and abstract way: Socket Intents.  Socket Intents express what an application knows, assumes, expects or wants to prioritize regarding its own network communication.  The information provided by Socket Intents should be taken into account by the network stack in a best-effort way." />
-  <meta name="description" content="This document outlines an API-independent concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a portable and abstract way: Socket Intents.  Socket Intents express what an application knows, assumes, expects or wants to prioritize regarding its own network communication.  The information provided by Socket Intents should be taken into account by the network stack in a best-effort way." />
+  <meta name="dct.issued" scheme="ISO8601" content="2017-10-23" />
+  <meta name="dct.abstract" content="This document outlines Socket Intents, a concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a generic and portable way.  Using Socket Intents an application can express what it knows, assumes, expects, or wants regarding its network communication.  The information provided by Socket Intents can be used by the network stack to optimize communication in a best-effort way." />
+  <meta name="description" content="This document outlines Socket Intents, a concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a generic and portable way.  Using Socket Intents an application can express what it knows, assumes, expects, or wants regarding its network communication.  The information provided by Socket Intents can be used by the network stack to optimize communication in a best-effort way." />
 
 </head>
 
@@ -334,11 +335,11 @@ address {
 </tr>
 <tr>
   <td class="left">Intended status: Experimental</td>
-  <td class="right">Berlin Institute of Technology</td>
+  <td class="right">TU Berlin</td>
 </tr>
 <tr>
-  <td class="left">Expires: December 17, 2017</td>
-  <td class="right">June 15, 2017</td>
+  <td class="left">Expires: April 26, 2018</td>
+  <td class="right">October 23, 2017</td>
 </tr>
 
     	
@@ -351,15 +352,15 @@ address {
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This document outlines an API-independent concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a portable and abstract way: Socket Intents.  Socket Intents express what an application knows, assumes, expects or wants to prioritize regarding its own network communication.  The information provided by Socket Intents should be taken into account by the network stack in a best-effort way.</p>
-<p>Socket Intent can be used to stem against the complexity and make use of multiple provisioning domains as well as new transport protocols and features available to a larger user base by expressing the applications intents in an abstract and portable way.</p>
+<p>This document outlines Socket Intents, a concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a generic and portable way.  Using Socket Intents an application can express what it knows, assumes, expects, or wants regarding its network communication.  The information provided by Socket Intents can be used by the network stack to optimize communication in a best-effort way.</p>
+<p>Socket Intent can be used to stem against the complexity of exploiting transport diversity, e.g., to automate the use of multiple access networks or provisioning domains.  It also opens the benefits of transport protocols and features to a larger user base by enabling to express applications intents in an intuitive and portable way.</p>
 <h1 id="rfc.status">
   <a href="#rfc.status">Status of This Memo</a>
 </h1>
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on December 17, 2017.</p>
+<p>This Internet-Draft will expire on April 26, 2018.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -374,31 +375,34 @@ address {
   	<li>1.   <a href="#rfc.section.1">Conventions and Definitions</a></li>
 <li>2.   <a href="#rfc.section.2">Introduction</a></li>
 <li>3.   <a href="#rfc.section.3">Problem Statement</a></li>
-<li>4.   <a href="#rfc.section.4">General Concept</a></li>
-<ul><li>4.1.   <a href="#rfc.section.4.1">Socket Intent Types</a></li>
-<li>4.2.   <a href="#rfc.section.4.2">Interactions between Socket Intents and QoS</a></li>
-</ul><li>5.   <a href="#rfc.section.5">Initial Socket Intent Types</a></li>
-<ul><li>5.1.   <a href="#rfc.section.5.1">Traffic Category</a></li>
-<li>5.2.   <a href="#rfc.section.5.2">Object Size to be Sent / Received</a></li>
-<li>5.3.   <a href="#rfc.section.5.3">Duration</a></li>
-<li>5.4.   <a href="#rfc.section.5.4">Stream Bitrate Sent / Received</a></li>
-<li>5.5.   <a href="#rfc.section.5.5">Burstiness</a></li>
-<li>5.6.   <a href="#rfc.section.5.6">Timeliness</a></li>
-<li>5.7.   <a href="#rfc.section.5.7">Application Resilience</a></li>
-<li>5.8.   <a href="#rfc.section.5.8">Cost Preferences</a></li>
-</ul><li>6.   <a href="#rfc.section.6">Usage examples</a></li>
-<ul><li>6.1.   <a href="#rfc.section.6.1">Example 1</a></li>
-<li>6.2.   <a href="#rfc.section.6.2">Example 2</a></li>
-<li>6.3.   <a href="#rfc.section.6.3">Example 3</a></li>
+<li>4.   <a href="#rfc.section.4">Socket Intents Concept</a></li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Interactions between Socket Intents and QoS</a></li>
+</ul><li>5.   <a href="#rfc.section.5">Socket Intent Types</a></li>
+<li>6.   <a href="#rfc.section.6">Initial Socket Intent Types</a></li>
+<ul><li>6.1.   <a href="#rfc.section.6.1">Traffic Category</a></li>
+<li>6.2.   <a href="#rfc.section.6.2">Size to be Sent / Received</a></li>
+<li>6.3.   <a href="#rfc.section.6.3">Duration</a></li>
+<li>6.4.   <a href="#rfc.section.6.4">Stream Bitrate Sent / Received</a></li>
+<li>6.5.   <a href="#rfc.section.6.5">Burstiness</a></li>
+<li>6.6.   <a href="#rfc.section.6.6">Timeliness</a></li>
+<li>6.7.   <a href="#rfc.section.6.7">Disruption Resilience</a></li>
+<li>6.8.   <a href="#rfc.section.6.8">Cost Preferences</a></li>
 </ul><li>7.   <a href="#rfc.section.7">Implementation Guidelines</a></li>
 <li>8.   <a href="#rfc.section.8">Security Considerations</a></li>
 <ul><li>8.1.   <a href="#rfc.section.8.1">Performance Degradation Attacks</a></li>
 <li>8.2.   <a href="#rfc.section.8.2">Information Leakage</a></li>
 </ul><li>9.   <a href="#rfc.section.9">IANA Considerations</a></li>
-<li>10.   <a href="#rfc.section.10">Publications History</a></li>
+<li>10.   <a href="#rfc.section.10">Acknowledgements</a></li>
 <li>11.   <a href="#rfc.references">References</a></li>
 <ul><li>11.1.   <a href="#rfc.references.1">Normative References</a></li>
 <li>11.2.   <a href="#rfc.references.2">Informative References</a></li>
+</ul><li>Appendix A.   <a href="#rfc.appendix.A">Usage examples</a></li>
+<ul><li>A.1.   <a href="#rfc.appendix.A.1">Example 1</a></li>
+<li>A.2.   <a href="#rfc.appendix.A.2">Example 2</a></li>
+<li>A.3.   <a href="#rfc.appendix.A.3">Example 3</a></li>
+</ul><li>Appendix B.   <a href="#rfc.appendix.B">Publications History</a></li>
+<li>Appendix C.   <a href="#rfc.appendix.C">Changes</a></li>
+<ul><li>C.1.   <a href="#rfc.appendix.C.1">Since -00</a></li>
 </ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
@@ -406,26 +410,34 @@ address {
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#conventions-and-definitions" id="conventions-and-definitions">Conventions and Definitions</a></h1>
 <p id="rfc.section.1.p.1">The words &#8220;MUST&#8221;, &#8220;MUST NOT&#8221;, &#8220;SHALL&#8221;, &#8220;SHALL NOT&#8221;, &#8220;SHOULD&#8221;, and &#8220;MAY&#8221; are used in this document. It&#8217;s not shouting; when these words are capitalized, they have a special meaning as defined in <a href="#RFC2119">[RFC2119]</a>.</p>
-<p id="rfc.section.1.p.2">Flow, Association, Stream, or Object are used as defined in <a href="#I-D.tiesel-taps-communitgrany">[I-D.tiesel-taps-communitgrany]</a>:</p>
+<p id="rfc.section.1.p.2">Association Set, Association, Stream, or Message are used as defined in <a href="#I-D.tiesel-taps-communitgrany">[I-D.tiesel-taps-communitgrany]</a>.</p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#intro" id="intro">Introduction</a></h1>
-<p id="rfc.section.2.p.1">Despite recent advances in the transport area, the adaption of new transport protocols and transport protocol features is slow and only happens in limited domains (primarily in the Web browser and within datacenters).  The same problem occurs for taking advantage of multiple available access networks or provisioning domains (PvDs).  In both cases, the benefits of the new transport diversity comes at the cost of an increased complexity that has to be mastered by the application programmer.</p>
-<p id="rfc.section.2.p.2">Enabling features like TCP fast open <a href="#RFC7413">[RFC7413]</a> or controlling how MPTCP <a href="#RFC6824">[RFC6824]</a> creates subflows requires specialized APIs that are not part of the standard socket API, often require deep knowledge of the transport protocol internals, and are not portable across different implementations.</p>
-<p id="rfc.section.2.p.3">Applications that want to use multiple network interfaces usually have to use their own heuristics to select which access network to use.  Choosing the right interface is difficult as their characteristics differ, e.g. in terms of performance, and obtaining the necessary information is often not easy since it may require special privileges and differs heavily by implementation.</p>
+<p id="rfc.section.2.p.1">Despite recent advances in the transport area, the adaption of new transport protocols and transport protocol features is slow and only happens in limited domains (primarily in the Web browser and within datacenters).  The same problem occurs for taking advantage of multiple available access networks or provisioning domains (PvDs).  In both cases, the benefits of the new transport diversity come at the cost of an increased complexity that has to be mastered by the application programmer.</p>
+<p id="rfc.section.2.p.2">To enable transport features like TCP fast open <a href="#RFC7413">[RFC7413]</a> or to control how MPTCP <a href="#RFC6824">[RFC6824]</a> creates subflows requires specialized APIs.  These APIs are not part of the standard socket API and are usually not portable and not available in many programming languages.  Using them often requires profound knowledge of the transport protocol internals.</p>
+<p id="rfc.section.2.p.3">To use multiple network interfaces, applications usually have to use their own heuristics to select which access network to use.  Choosing the right interface is difficult as their characteristics differ, e.g., regarding performance.  Obtaining the necessary information is difficult since it may require special privileges and non-portable APIs.</p>
 <p id="rfc.section.2.p.4">In all cases mentioned above, an application that wants to take advantage of the available transport diversity is faced with substantially higher complexity regarding network APIs and networking code.</p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#problem-statement" id="problem-statement">Problem Statement</a></h1>
-<p id="rfc.section.3.p.1">Application programmers opening a communication channel typically know how this channel will be used. Beside the hard requirements already necessary for establishing the communication channels, e.g., reliable in-order stream transport, there is more information available: An application developer has an intuition about optimization preferences, e.g., optimize for bandwidth, latency, or cost, about expectations, e.g.  towards data loss, and possibly also about specifics, such as how many bytes will be sent or received.</p>
-<p id="rfc.section.3.p.2">This information does not directly map to the choice of a transport protocol, to certain protocol parameters, nor to which PvD to use, but the information can imply that the application can benefit from certain transport options or help to choose between multiple PvD as described in <a href="#RFC7556">[RFC7556]</a>, Section 6.2, and therefore enable the OS to adjust its defaults for this communication channel accordingly.</p>
-<p id="rfc.section.3.p.3">The preferences, expectations and other information known about the upcoming communication MAY be expressible in an intuitive, abstract way independent of the network- and transport protocol.  Its representation SHOULD be independent of the actual API used for network communication, e.g., these SHOULD be expressible in whatever API available, e.g., as &#8220;socketopts&#8221; for BSD sockets or as part of the address resolution configuration for <a href="#I-D.trammell-taps-post-sockets">Post Sockets</a> <cite title="NONE">[I-D.trammell-taps-post-sockets]</cite>.  Finally, given the expectations and external constraints known, the OS SHOULD use the information provided via Socket Intents in an best-effort fashion and therefore try to choose the best transport protocol, default parameters and PvDs available and MAY try to further optimize based on them.</p>
-<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#concept" id="concept">General Concept</a></h1>
-<p id="rfc.section.4.p.1">With Socket Intents, applications MAY express their communication preferences in order to take advantage of the available transfer diversity.  Depending on the API used, Socket Intents can be used on a per Flow, Association, Stream, or Object level.  Communication preference refers to desired transport characteristics, e.g., low delay or high throughput, stable transport or minimal cost, and is optional information.</p>
-<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#typespec" id="typespec">Socket Intent Types</a></h1>
-<p id="rfc.section.4.1.p.1">The following sections contain a list or Socket Intent types and their possible values.</p>
-<p id="rfc.section.4.1.p.2">Socket Intents are structured as key / value pair. The key is expressed by a short name, the value has a fixed data type (Enum, Int or Float).</p>
-<p id="rfc.section.4.1.p.3">The namespace for the short names is portioned as follows: - Experimental Socket Intent type MUST start with &#8220;x-&#8220;.  - Private or vendor specific Socket Intent type MUST start with &#8220;y-[vendor]-&#8220;.  - The remming Socket Intent type namespace SHOULD be managed by an IANA registry. The assignment of new types requires an RFC or expert review.</p>
-<p id="rfc.section.4.1.p.4">For Enum data types, a list of valid values MUST be provides by the document specifying that intent.</p>
-<p id="rfc.section.4.1.p.5">An implementation faced with unknown intent types or invalid or unknown values MAY ignore that Intent but SHOULD return an error code to the application.</p>
-<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#interactions-between-socket-intents-and-qos" id="interactions-between-socket-intents-and-qos">Interactions between Socket Intents and QoS</a></h1>
-<p id="rfc.section.4.2.p.1">Socket Intents are not QoS labels, but have an orthogonal meaning.</p>
+<p id="rfc.section.3.p.1">Application programmers opening a communication channel typically know how this channel will be used.  There is more information available than the protocol and destination address needed to establish a communication channel: An application developer has an intuition about many aspects of an upcoming communication.  These intuition may include:</p>
+<p/>
+
+<dl>
+  <dt>preferences:</dt>
+  <dd style="margin-left: 8">whether to optimize for bandwidth, latency, or cost</dd>
+  <dt>characteristics:</dt>
+  <dd style="margin-left: 8">expected packet rates, byte rates or how many bytes will be sent or received.</dd>
+  <dt>expectations:</dt>
+  <dd style="margin-left: 8">towards path availability or packet loss</dd>
+  <dt>resiliences:</dt>
+  <dd style="margin-left: 8">whether the application can gracefully handle certain error cases</dd>
+</dl>
+<p id="rfc.section.3.p.3">These preferences, expectations and other information known about the upcoming communication should be expressible in an intuitive, generic way, that is independent of the network and transport protocol.  Its representation should be independent of the actual API used for network communication and should be expressible in whatever API available, e.g., as socket options for BSD sockets or as part of the address resolution configuration for <a href="#I-D.trammell-taps-post-sockets">Post Sockets</a> <cite title="NONE">[I-D.trammell-taps-post-sockets]</cite>.</p>
+<p id="rfc.section.3.p.4">Socket Intents should enable the OS to adjust the communication channel according to the application&#8217;s intents in a best-effort fashion: They should provide the information needed to automatically enabling transport features the application can benefit from or help choosing the most suitable (combination) of access networks or PvD (see <a href="#RFC7556">[RFC7556]</a>, Section 6.2) available.  The actual implementation is not part of the Socket Intents concept, it is left to an OS policy that may choose the best transport protocol, default parameters and PvDs available and may also try to further optimize wherever possible.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#concept" id="concept">Socket Intents Concept</a></h1>
+<p id="rfc.section.4.p.1">Socket Intents are pieces of information that allow an application to express what they know about the application&#8217;s communication.  They indicate what the application wants to achieve, knows, or assumes in general, intuitive terms.  An application can use them to annotate the characteristics, preferences, and intentions it associates with each communication unit.  Depending on the API used, Socket Intents can be used on a per Association Set, Association, Stream or, Message level.</p>
+<p id="rfc.section.4.p.2">Socket Intents are optional information that can be considered in a <em>best-effort</em> manner.  Socket Intents <em>do not include requirements</em>, such as reliable in-order delivery.  Typical examples include desired transport characteristics, e.g., low delay, high throughput, or minimal cost, as well as expected application behavior, e.g., will send 500 bytes.  As this information captures the intents of an applications and passes them along with the communication socket, we call these pieces of information Socket Intents.</p>
+<p id="rfc.section.4.p.3">Applications have an incentive to specify their intents as accurately as possible to take advantage of the most suitable existing resources.  Applications are expected to selfishly specify their preferences.  It is up to the OS&#8217;s policy to prevent commitment of excessive resources.</p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#interactions-between-socket-intents-and-qos" id="interactions-between-socket-intents-and-qos">Interactions between Socket Intents and QoS</a></h1>
+<p id="rfc.section.4.1.p.1">Socket Intents are not QoS labels, but have an orthogonal meaning.  While the purpose of QoS is to specify what an application requires, Socket Intents are used to specify what an application knows or prefers.  Therefore,</p>
 <p/>
 
 <ul>
@@ -433,22 +445,30 @@ address {
   <li>Socket Intents MUST NOT be used to derive IntServ / RSVP style guarantees.</li>
   <li>Socket Intents SHOULD be taken into account on a best-effort basis and MAY be used to derive DiffServ Service Classes as described in <a href="#RFC4594">[RFC4594]</a>.</li>
 </ul>
-<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#types" id="types">Initial Socket Intent Types</a></h1>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#typespec" id="typespec">Socket Intent Types</a></h1>
+<p id="rfc.section.5.p.1">Socket Intents are structured as key-value-pairs.</p>
+<p id="rfc.section.5.p.2">The key, called short name, specifies the Socket Intent type.  It is identified by a lower case string of the lower-case characters [a-z], the numbers [0-9] and the separator &#8220;-&#8220;.</p>
+<p id="rfc.section.5.p.3">The namespace for the short names is partitioned as follows:</p>
 <p/>
 
-<dl>
-  <dt>Note:</dt>
-  <dd style="margin-left: 8">Recommended default values for Enum types are marked with an asterisk (*) behind the level name.</dd>
-</dl>
-<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> <a href="#traffic-category" id="traffic-category">Traffic Category</a></h1>
-<p id="rfc.section.5.1.p.1">The Traffic Category describes the dominating traffic pattern of the respective communication unit expected by the application.</p>
+<ul>
+  <li>All Socket Intent type not starting with &#8220;x-&#8220; or &#8220;y-&#8220; are managed by an IANA registry.  The assignment of new types requires an RFC or expert review (TO BE DECIDED).</li>
+  <li>Socket Intent type starting with &#8220;x-&#8220; are for experimental use.</li>
+  <li>Private or vendor specific Socket Intent type MUST start with &#8220;y-[vendor]-&#8220;.</li>
+</ul>
+<p id="rfc.section.5.p.5">Values can be represented as Enum, Int, Float, ASCII-String <a href="#RFC0020">[RFC0020]</a> or a sequence of the aforementioned data types.  Implementations determine how these types are represented on the respective platform.</p>
+<p id="rfc.section.5.p.6">The data type for the individual Socket Intents are determined by the document defining the Socket Intent and MUST NOT be changed by an implementation.  For Enum data types, a list of valid values MUST be provided by the document specifying that intent as well as a default value that is equivalent to not specifying this intent.</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#types" id="types">Initial Socket Intent Types</a></h1>
+<p id="rfc.section.6.p.1">The following sections contain a list or Socket Intent types and their possible values.  Recommended default values for Enum values are marked with an asterisk (*) behind the level name.</p>
+<h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#traffic-category" id="traffic-category">Traffic Category</a></h1>
+<p id="rfc.section.6.1.p.1">The Traffic Category describes the dominating traffic pattern of the respective communication unit expected by the application.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
   <dd style="margin-left: 8">category</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Flow, Association, Stream</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Enum</dd>
 </dl>
@@ -470,11 +490,11 @@ address {
     </tr>
     <tr>
       <td class="left">stream</td>
-      <td class="left">Stream of bytes/objects with steady data rate</td>
+      <td class="left">Stream of bytes/messages with steady data rate</td>
     </tr>
     <tr>
       <td class="left">bulk</td>
-      <td class="left">Bulk transfer of large objects, presumably bandwidth bound</td>
+      <td class="left">Bulk transfer of large messages, presumably bandwidth bound</td>
     </tr>
     <tr>
       <td class="left">mixed*</td>
@@ -486,54 +506,54 @@ address {
 
 <dl>
   <dt>Note:</dt>
-  <dd style="margin-left: 8">Most categories suggest the use of other intents to further describe the traffic pattern anticipated, e.g., the bulk category suggesting the use of the Object Size intents or the stream category suggesting the Stream Bitrate and Duration intents.</dd>
+  <dd style="margin-left: 8">Most categories suggest the use of other intents to further describe the traffic pattern anticipated, e.g., the bulk category suggesting the use of the Message Size intents or the stream category suggesting the Stream Bitrate and Duration intents.</dd>
 </dl>
-<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> <a href="#object-size-to-be-sent-received" id="object-size-to-be-sent-received">Object Size to be Sent / Received</a></h1>
-<p id="rfc.section.5.2.p.1">This Intent is used to communicate the expected size of a transfer.</p>
+<h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#size-to-be-sent-received" id="size-to-be-sent-received">Size to be Sent / Received</a></h1>
+<p id="rfc.section.6.2.p.1">This Intent is used to communicate the expected size of a transfer.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
-  <dd style="margin-left: 8">sndobjsz / recvobjsz</dd>
+  <dd style="margin-left: 8">sndsz / recvsz</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Flow, Association, Stream, Object</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream, Message</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Int (bytes)</dd>
 </dl>
-<h1 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3.</a> <a href="#duration" id="duration">Duration</a></h1>
-<p id="rfc.section.5.3.p.1">This Intent is used to communicate the expected lifetime of the respective communication unit.</p>
+<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#duration" id="duration">Duration</a></h1>
+<p id="rfc.section.6.3.p.1">This Intent is used to communicate the expected lifetime of the respective communication unit.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
   <dd style="margin-left: 8">duration</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Flow, Association, Stream</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Int (msec)</dd>
 </dl>
-<h1 id="rfc.section.5.4"><a href="#rfc.section.5.4">5.4.</a> <a href="#stream-bitrate-sent-received" id="stream-bitrate-sent-received">Stream Bitrate Sent / Received</a></h1>
-<p id="rfc.section.5.4.p.1">This Intent is used to communicate the bitrate of the respective communication unit.</p>
+<h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> <a href="#stream-bitrate-sent-received" id="stream-bitrate-sent-received">Stream Bitrate Sent / Received</a></h1>
+<p id="rfc.section.6.4.p.1">This Intent is used to communicate the bitrate of the respective communication unit.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
   <dd style="margin-left: 8">sndrate / recvrate</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Flow, Association, Stream</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Int (bytes/sec)</dd>
 </dl>
-<h1 id="rfc.section.5.5"><a href="#rfc.section.5.5">5.5.</a> <a href="#burstiness" id="burstiness">Burstiness</a></h1>
-<p id="rfc.section.5.5.p.1">This Intent describes the anticipated sender-side burst characteristics of the traffic for this communication unit. It expresses how the traffic sent by the application is expected to vary over time, and, consequently, how long sequences of consecutively sent packets will be.  Note that the actual burst characteristics of the traffic at the receiver side will depend on the network.</p>
-<p id="rfc.section.5.5.p.2">This Intent can provide hints to the application on what the resource usage pattern for this communication unit will look like, which can be useful for balancing the requirements of different application.</p>
+<h1 id="rfc.section.6.5"><a href="#rfc.section.6.5">6.5.</a> <a href="#burstiness" id="burstiness">Burstiness</a></h1>
+<p id="rfc.section.6.5.p.1">This Intent describes the anticipated sender-side burst characteristics of the traffic for this communication unit. It expresses how the traffic sent by the application is expected to vary over time, and, consequently, how long sequences of consecutively sent packets will be.  Note that the actual burst characteristics of the traffic at the receiver side will depend on the network.</p>
+<p id="rfc.section.6.5.p.2">This Intent can provide hints to the application on what the resource usage pattern for this communication unit will look like, which can be useful for balancing the requirements of different application.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
-  <dd style="margin-left: 8">burst</dd>
+  <dd style="margin-left: 8">bursts</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Association,  Connection, Stream</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Enum</dd>
 </dl>
@@ -567,15 +587,15 @@ address {
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.5.6"><a href="#rfc.section.5.6">5.6.</a> <a href="#timeliness" id="timeliness">Timeliness</a></h1>
-<p id="rfc.section.5.6.p.1">This Intent describes the desired delay characteristics for this communication unit.  It provides hints for the OS whether to optimize for low delay or for other criteria.  There are no hard requirements or implied guarantees on whether these requirements can actually be satisfied.</p>
+<h1 id="rfc.section.6.6"><a href="#rfc.section.6.6">6.6.</a> <a href="#timeliness" id="timeliness">Timeliness</a></h1>
+<p id="rfc.section.6.6.p.1">This Intent describes the desired delay characteristics for this communication unit.  It provides hints for the OS whether to optimize for low delay or for other criteria.  There are no hard requirements or implied guarantees on whether these requirements can actually be satisfied.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
   <dd style="margin-left: 8">timeliness</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Association,  Connection, Stream, Object</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream, Message</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Enum</dd>
 </dl>
@@ -605,15 +625,15 @@ address {
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.5.7"><a href="#rfc.section.5.7">5.7.</a> <a href="#application-resilience" id="application-resilience">Application Resilience</a></h1>
-<p id="rfc.section.5.7.p.1">This Intent describes how an application deals with disruption of its communication, e.g. connection loss. It communicates how well the application can recover from such disturbance and can have implications on how many resources the OS should allocate to failover techniques for this particular communication unit.</p>
+<h1 id="rfc.section.6.7"><a href="#rfc.section.6.7">6.7.</a> <a href="#disruption-resilience" id="disruption-resilience">Disruption Resilience</a></h1>
+<p id="rfc.section.6.7.p.1">This Intent describes how an application deals with disruption of its communication, e.g. connection loss. It communicates how well the application can recover from such disturbance and can have implications on how many resources the OS should allocate to failover techniques for this particular communication unit.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
   <dd style="margin-left: 8">resilience</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Association,  Connection, Stream, Object</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream, Message</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Enum</dd>
 </dl>
@@ -639,15 +659,15 @@ address {
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.5.8"><a href="#rfc.section.5.8">5.8.</a> <a href="#cost-preferences" id="cost-preferences">Cost Preferences</a></h1>
-<p id="rfc.section.5.8.p.1">This describes the Intents of an Application towards costs cased by the respective communication unit. It should guide the OS how to handle cost vs. performance and reliability tradeoffs.</p>
+<h1 id="rfc.section.6.8"><a href="#rfc.section.6.8">6.8.</a> <a href="#cost-preferences" id="cost-preferences">Cost Preferences</a></h1>
+<p id="rfc.section.6.8.p.1">This describes the Intents of an Application towards costs cased by the respective communication unit. It should guide the OS how to handle cost vs. performance and reliability tradeoffs.</p>
 <p/>
 
 <dl>
   <dt>Short name:</dt>
   <dd style="margin-left: 8">cost</dd>
   <dt>Applicability:</dt>
-  <dd style="margin-left: 8">Association,  Connection, Stream, Object</dd>
+  <dd style="margin-left: 8">Association Set, Association, Stream, Message</dd>
   <dt>Data type:</dt>
   <dd style="margin-left: 8">Enum</dd>
 </dl>
@@ -677,43 +697,31 @@ address {
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#usage-examples" id="usage-examples">Usage examples</a></h1>
-<h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> <a href="#example-1" id="example-1">Example 1</a></h1>
-<p id="rfc.section.6.1.p.1">Consider a cellphone performing an OS upgrade.  This process usually implies downloading a large file.  This is a bulk transfer for which the application may already know the file size.  Timing is typically noncritical and the data can be downloaded as background traffic with minimal cost and power overhead.  It would not hurt if the TCP connection was closed during the transfer as the download can be continued.</p>
-<p id="rfc.section.6.1.p.2">For this case, the application should set the &#8220;Traffic Category&#8221; to &#8220;bulk&#8221;, &#8220;Timeliness&#8221; to &#8220;background&#8221;, and &#8220;Application Resilience&#8221; to &#8220;resilient&#8221;.  In addition, &#8220;Object Size to be Received&#8221; can be provided.  Finally, the application may set the the &#8220;Cost Preferences&#8221; to &#8220;no_expense&#8221;.</p>
-<p id="rfc.section.6.1.p.3">The OS can use this information and therefore may schedule this transfer on a flaky but not traffic-billed WiFi link and may reject the connection attempt if no cheap access link is available.</p>
-<h1 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2.</a> <a href="#example-2" id="example-2">Example 2</a></h1>
-<p id="rfc.section.6.2.p.1">Consider a user watching non-live video content using MPEG-DASH <a href="#DASH">[DASH]</a>.  This usually means fetching a stream of video chunks.  The application should know the size of each chunk and may know the bitrate and the duration of each chunk and the whole video.  Disconnection of the TCP connection should be avoided because that might have an effect that is visible to the user.</p>
-<p id="rfc.section.6.2.p.2">For this case, the application should set the &#8220;Traffic Category&#8221; to &#8220;stream&#8221;, the &#8220;Timeliness&#8221; to &#8220;stream&#8221;, and &#8220;Application Resilience&#8221; to &#8220;sensitive&#8221;. It may also provide the &#8220;Stream Bitrate Received&#8221; and &#8220;Duration&#8221; expected.  Finally, the application may set the the &#8220;Cost Preferences&#8221; to &#8220;balance_cost&#8221;.</p>
-<p id="rfc.section.6.2.p.3">The OS can use this information and, e.g, use MPTCP <a href="#RFC6824">[RFC6824]</a> if available to schedule the traffic on the cheaper link (e.g, WiFi) while establishing an additional subflow over an expensive link (e.g., LTE).  If the desired bandwidth cannot be matched by the cheaper link, the more expensive link can be added to satisfy the desired bandwidth.</p>
-<p id="rfc.section.6.2.p.4">If the application would set the &#8220;Cost Preferences&#8221; to &#8220;optimize_cost&#8221;, the OS would not schedule traffic on the second subflow and the application would reduce the video quality to adapt to the available data rate.</p>
-<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> <a href="#example-3" id="example-3">Example 3</a></h1>
-<p id="rfc.section.6.3.p.1">Consider a user managing a remote machine via SSH.  This usually involves at least one long-lived console session and possibly file transfers using SCP or rsync multiplexed on the same association (e.g. TCP connection).</p>
-<p id="rfc.section.6.3.p.2">For the console session, the application can set the &#8220;Traffic Category&#8221; to &#8220;control&#8221;, the &#8220;Burstiness&#8221; to &#8220;random bursts&#8221;, the timeliness to &#8220;interactive&#8221; and the resilience to &#8220;sensitive&#8221;.</p>
-<p id="rfc.section.6.3.p.3">For the file transfers, SSH may set both, the &#8220;Traffic Category&#8221; and &#8220;Burstiness&#8221; to &#8220;bulk&#8221;. It may also know the size of the transfer and therefore sets &#8220;Object Size to be Sent&#8221; or &#8220;Object Size to be Received&#8221;.</p>
-<p id="rfc.section.6.3.p.4">Assuming there are transport opportunities supporting multiple streams in a single association (e.g. SCPT <a href="#RFC4960">[RFC4960]</a>), the OS can use this information to schedule the streams over different links to meet their requirements (latency vs. bandwidth).  In case the OS has to use TCP, it can still optimize by disabling TCP Nagle Algorithm for console session related transmissions.</p>
 <h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#implementation-guidelines" id="implementation-guidelines">Implementation Guidelines</a></h1>
-<p id="rfc.section.7.p.1">TBD</p>
+<p id="rfc.section.7.p.1">Implementations faced with unknown Socket Intent types SHOULD ignore these intents for forward compatibility.  The API MAY include a parameter to change this behavior and make specifying unknown Socket Intent types return an error.</p>
+<p id="rfc.section.7.p.2">Invalid values SHOULD return an error to the application.</p>
+<p id="rfc.section.7.p.3">For debugging purposes, implementations SHOULD allow to enumerate the Socket Intents that are understood by the implementation.  They MAY expose which of the Socket Intents were considered by the implementation.</p>
 <h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#sec" id="sec">Security Considerations</a></h1>
 <h1 id="rfc.section.8.1"><a href="#rfc.section.8.1">8.1.</a> <a href="#performance-degradation-attacks" id="performance-degradation-attacks">Performance Degradation Attacks</a></h1>
 <p id="rfc.section.8.1.p.1">We assume that applications specify their preferences in a selfish, but not malicious way and that it is up to the OS to find a compromise between demands.</p>
-<p id="rfc.section.8.1.p.2">A malicious application could confuse the OS in a way that leads to scheduling traffic with certain Intents on amore expensive interface, penalizing this traffic, or even rejecting it.  The attack vector added by this is negligible: As the malicious application could also generate the traffic it claims to intent, it already has a much more powerful attack vector.</p>
+<p id="rfc.section.8.1.p.2">A malicious application could confuse the OS in a way that leads to scheduling traffic with certain Intents on a more expensive interface, penalizing this traffic, or even rejecting it.  The attack vector added by this is negligible: As the malicious application could also generate the traffic it claims to intend, it already has a much more powerful attack vector.</p>
 <p id="rfc.section.8.1.p.3">As a mitigation, the OS could monitor and compare the intents specified with the traffic actually generated and notify the user if the usage of Socket Intents is unusual or defective.</p>
 <h1 id="rfc.section.8.2"><a href="#rfc.section.8.2">8.2.</a> <a href="#information-leakage" id="information-leakage">Information Leakage</a></h1>
-<p id="rfc.section.8.2.p.1">Varying the transport or IP layer parameters of packets belonging to different Streams or Objects multiplexed in the same encrypted association might enable an attacker to gain some ground truth about the shares of different kinds of traffic. As this might also be implied by packet timings, application developers might weight the small additional information disclosure against the possible performance gains. Using Socket Intents on Association level can be considered safe.</p>
+<p id="rfc.section.8.2.p.1">Varying the transport or IP layer parameters of packets belonging to different Streams or Messages multiplexed in the same encrypted association might enable an attacker to gain some ground truth about the shares of different kinds of traffic. As this might also be implied by packet timings, application developers might weight the small additional information disclosure against the possible performance gains. Using Socket Intents on Association level can be considered safe.</p>
 <h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
-<p id="rfc.section.9.p.1">The Socket Intents type namespace SHOULD be managed by the IANA registry. Details conforming to <a href="#RFC5226">[RFC5226]</a> are laid out in <a href="#typespec">Section 4.1</a>, the initial types for the registry are described in <a href="#types">Section 5</a>.</p>
-<h1 id="rfc.section.10"><a href="#rfc.section.10">10.</a> <a href="#publications-history" id="publications-history">Publications History</a></h1>
-<p/>
-
-<ul>
-  <li>The original idea of Socket Intents was published in <a href="#CoNEXT2013">[CoNEXT2013]</a>.</li>
-  <li>A performance study &#8220;Socket Intents: OS Support for Using Multiple Access Networks and its Benefits for Web Browsing&#8221; is under submission.</li>
-</ul>
+<p id="rfc.section.9.p.1">The Socket Intents type namespace SHOULD be managed by the IANA registry. Details conforming to <a href="#RFC5226">[RFC5226]</a> are laid out in <a href="#typespec">Section 5</a>, the initial types for the registry are described in <a href="#types">Section 6</a>.</p>
+<h1 id="rfc.section.10"><a href="#rfc.section.10">10.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.10.p.1">This work has been supported by Leibniz Prize project funds of DFG - German Research Foundation: Gottfried Wilhelm Leibniz-Preis 2011 (FKZ FE 570/4-1).</p>
 <h1 id="rfc.references"><a href="#rfc.references">11.</a> References</h1>
 <h1 id="rfc.references.1"><a href="#rfc.references.1">11.1.</a> Normative References</h1>
 <table>
   <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC0020">[RFC0020]</b>
+      </td>
+      <td class="top"><a>Cerf, V.</a>, "<a href="http://tools.ietf.org/html/rfc20">ASCII format for network interchange</a>", STD 80, RFC 20, DOI 10.17487/RFC0020, October 1969.</td>
+    </tr>
     <tr>
       <td class="reference">
         <b id="RFC2119">[RFC2119]</b>
@@ -724,7 +732,7 @@ address {
       <td class="reference">
         <b id="RFC5226">[RFC5226]</b>
       </td>
-      <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", BCP 26, RFC 5226, DOI 10.17487/RFC5226, May 2008.</td>
+      <td class="top"><a>Narten, T.</a> and <a>H. Alvestrand</a>, "<a href="http://tools.ietf.org/html/rfc5226">Guidelines for Writing an IANA Considerations Section in RFCs</a>", RFC 5226, DOI 10.17487/RFC5226, May 2008.</td>
     </tr>
   </tbody>
 </table>
@@ -735,7 +743,7 @@ address {
       <td class="reference">
         <b id="CoNEXT2013">[CoNEXT2013]</b>
       </td>
-      <td class="top"><a>Schmidt, P.</a>, <a>Enghardt, T.</a>, <a>Khalili, R.</a> and <a>A. Feldmann</a>, "<a>Socket intents</a>", Proceedings of the ninth ACM conference on Emerging networking experiments and technologies - CoNEXT '13 , DOI 10.1145/2535372.2535405, 2013.</td>
+      <td class="top"><a>Schmidt, P.</a>, <a>Enghardt, T.</a>, <a>Khalili, R.</a> and <a>A. Feldmann</a>, "<a>Socket intents</a>", Proceedings of the ninth ACM conference on Emerging networking experiments and technologies - CoNEXT '13, DOI 10.1145/2535372.2535405, 2013.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -753,13 +761,13 @@ address {
       <td class="reference">
         <b id="I-D.tiesel-taps-communitgrany">[I-D.tiesel-taps-communitgrany]</b>
       </td>
-      <td class="top"><a>Tiesel, P.</a> and <a>T. Enghardt</a>, "<a>Communication Units Granularity Considerations for using Transport Diversity or Multiple Provisioning Domains</a>", draft-tiesel-taps-communitgrany-00 (work in progress) , July 2017.</td>
+      <td class="top"><a>Tiesel, P.</a> and <a>T. Enghardt</a>, "<a href="http://tools.ietf.org/html/draft-tiesel-taps-communitgrany-00">Communication Units Granularity Considerations for Multi-Path Aware Transport Selection</a>", Internet-Draft draft-tiesel-taps-communitgrany-00, June 2017.</td>
     </tr>
     <tr>
       <td class="reference">
         <b id="I-D.trammell-taps-post-sockets">[I-D.trammell-taps-post-sockets]</b>
       </td>
-      <td class="top"><a>Trammell, B.</a>, <a>Perkins, C.</a>, <a>Pauly, T.</a> and <a>M. Kuehlewind</a>, "<a href="http://tools.ietf.org/html/draft-trammell-taps-post-sockets-00">Post Sockets, An Abstract Programming Interface for the Transport Layer</a>", Internet-Draft draft-trammell-taps-post-sockets-00, March 2017.</td>
+      <td class="top"><a>Trammell, B.</a>, <a>Perkins, C.</a>, <a>Pauly, T.</a>, <a>Kuehlewind, M.</a> and <a>C. Wood</a>, "<a href="http://tools.ietf.org/html/draft-trammell-taps-post-sockets-01">Post Sockets, An Abstract Programming Interface for the Transport Layer</a>", Internet-Draft draft-trammell-taps-post-sockets-01, September 2017.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -793,6 +801,39 @@ address {
     </tr>
   </tbody>
 </table>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> <a href="#examples" id="examples">Usage examples</a></h1>
+<h1 id="rfc.appendix.A.1"><a href="#rfc.appendix.A.1">A.1.</a> <a href="#example-1" id="example-1">Example 1</a></h1>
+<p id="rfc.section.A.1.p.1">Consider a cellphone performing an OS upgrade.  This process usually implies downloading a large file.  This is a bulk transfer for which the application may already know the file size.  Timing is typically noncritical and the data can be downloaded as background traffic with minimal cost and power overhead.  It would not hurt if the TCP connection was closed during the transfer as the download can be continued.</p>
+<p id="rfc.section.A.1.p.2">For this case, the application should set the &#8220;Traffic Category&#8221; to &#8220;bulk&#8221;, &#8220;Timeliness&#8221; to &#8220;background&#8221;, and &#8220;Application Resilience&#8221; to &#8220;resilient&#8221;.  In addition, &#8220;Message Size to be Received&#8221; can be provided.  Finally, the application may set the the &#8220;Cost Preferences&#8221; to &#8220;no_expense&#8221;.</p>
+<p id="rfc.section.A.1.p.3">The OS can use this information and therefore may schedule this transfer on a flaky but not traffic-billed WiFi link and may reject the connection attempt if no cheap access link is available.</p>
+<h1 id="rfc.appendix.A.2"><a href="#rfc.appendix.A.2">A.2.</a> <a href="#example-2" id="example-2">Example 2</a></h1>
+<p id="rfc.section.A.2.p.1">Consider a user watching non-live video content using MPEG-DASH <a href="#DASH">[DASH]</a>.  This usually means fetching a stream of video chunks.  The application should know the size of each chunk and may know the bitrate and the duration of each chunk and the whole video.  Disconnection of the TCP connection should be avoided because that might have an effect that is visible to the user.</p>
+<p id="rfc.section.A.2.p.2">For this case, the application should set the &#8220;Traffic Category&#8221; to &#8220;stream&#8221;, the &#8220;Timeliness&#8221; to &#8220;stream&#8221;, and &#8220;Application Resilience&#8221; to &#8220;sensitive&#8221;. It may also provide the &#8220;Stream Bitrate Received&#8221; and &#8220;Duration&#8221; expected.  Finally, the application may set the the &#8220;Cost Preferences&#8221; to &#8220;balance_cost&#8221;.</p>
+<p id="rfc.section.A.2.p.3">The OS can use this information and, e.g, use MPTCP <a href="#RFC6824">[RFC6824]</a> if available to schedule the traffic on the cheaper link (e.g, WiFi) while establishing an additional subflow over an expensive link (e.g., LTE).  If the desired bandwidth cannot be matched by the cheaper link, the more expensive link can be added to satisfy the desired bandwidth.</p>
+<p id="rfc.section.A.2.p.4">If the application would set the &#8220;Cost Preferences&#8221; to &#8220;optimize_cost&#8221;, the OS would not schedule traffic on the second subflow and the application would reduce the video quality to adapt to the available data rate.</p>
+<h1 id="rfc.appendix.A.3"><a href="#rfc.appendix.A.3">A.3.</a> <a href="#example-3" id="example-3">Example 3</a></h1>
+<p id="rfc.section.A.3.p.1">Consider a user managing a remote machine via SSH.  This usually involves at least one long-lived console session and possibly file transfers using SCP or rsync multiplexed on the same association (e.g. TCP connection).</p>
+<p id="rfc.section.A.3.p.2">For the console session, the application can set the &#8220;Traffic Category&#8221; to &#8220;control&#8221;, the &#8220;Burstiness&#8221; to &#8220;random bursts&#8221;, the timeliness to &#8220;interactive&#8221; and the resilience to &#8220;sensitive&#8221;.</p>
+<p id="rfc.section.A.3.p.3">For the file transfers, SSH may set both, the &#8220;Traffic Category&#8221; and &#8220;Burstiness&#8221; to &#8220;bulk&#8221;. It may also know the size of the transfer and therefore sets &#8220;Message Size to be Sent&#8221; or &#8220;Message Size to be Received&#8221;.</p>
+<p id="rfc.section.A.3.p.4">Assuming there are transport opportunities supporting multiple streams in a single association (e.g. SCPT <a href="#RFC4960">[RFC4960]</a>), the OS can use this information to schedule the streams over different links to meet their requirements (latency vs. bandwidth).  In case the OS has to use TCP, it can still optimize by disabling TCP Nagle Algorithm for console session related transmissions.</p>
+<h1 id="rfc.appendix.B"><a href="#rfc.appendix.B">Appendix B.</a> <a href="#publications-history" id="publications-history">Publications History</a></h1>
+<p/>
+
+<ul>
+  <li>The original idea of Socket Intents was published in <a href="#CoNEXT2013">[CoNEXT2013]</a>.</li>
+  <li>A performance study &#8220;Socket Intents: OS Support for Using Multiple Access Networks and its Benefits for Web Browsing&#8221; is under submission.</li>
+</ul>
+<h1 id="rfc.appendix.C"><a href="#rfc.appendix.C">Appendix C.</a> <a href="#changes" id="changes">Changes</a></h1>
+<h1 id="rfc.appendix.C.1"><a href="#rfc.appendix.C.1">C.1.</a> <a href="#since-00" id="since-00">Since -00</a></h1>
+<p/>
+
+<ul>
+  <li>Updates on Terminology (Object -&gt; Message, Flow -&gt; Assocication)</li>
+  <li>More detailed Socket Intent Types specification</li>
+  <li>Added implementation guidelines</li>
+  <li>Many clairfications</li>
+  <li>Fixed Author affiliation</li>
+</ul>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
@@ -804,7 +845,7 @@ address {
 		<span class="family-name">Tiesel</span>
 	  </span>
 	</span>
-	<span class="org vcardline">Berlin Institute of Technology</span>
+	<span class="org vcardline">TU Berlin</span>
 	<span class="adr">
 	  <span class="vcardline">Marchstr. 23</span>
 
@@ -826,7 +867,7 @@ address {
 		<span class="family-name">Enghardt</span>
 	  </span>
 	</span>
-	<span class="org vcardline">Berlin Institute of Technology</span>
+	<span class="org vcardline">TU Berlin</span>
 	<span class="adr">
 	  <span class="vcardline">Marchstr. 23</span>
 
