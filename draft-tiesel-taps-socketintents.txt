@@ -4,8 +4,9 @@
 
 TAPS Working Group                                             P. Tiesel
 Internet-Draft                                               T. Enghardt
-Intended status: Experimental                                  TU Berlin
-Expires: April 26, 2018                                 October 23, 2017
+Intended status: Experimental                                A. Feldmann
+Expires: April 26, 2018                                        TU Berlin
+                                                        October 23, 2017
 
 
                              Socket Intents
@@ -15,17 +16,19 @@ Abstract
 
    This document outlines Socket Intents, a concept that allows
    applications to share their knowledge about upcoming communication
-   and express their performance preferences in a generic and portable
-   way.  Using Socket Intents an application can express what it knows,
-   assumes, expects, or wants regarding its network communication.  The
-   information provided by Socket Intents can be used by the network
-   stack to optimize communication in a best-effort way.
+   and express their performance preferences in a generic, intuitive
+   and, portable way.  Using Socket Intents an application can express
+   what it knows, assumes, expects, or wants regarding its network
+   communication.  The information provided by Socket Intents can be
+   used by the network stack to optimize communication in a best-effort
+   way.
 
    Socket Intent can be used to stem against the complexity of
-   exploiting transport diversity, e.g., to automate the use of multiple
-   access networks or provisioning domains.  It also opens the benefits
-   of transport protocols and features to a larger user base by enabling
-   to express applications intents in an intuitive and portable way.
+   exploiting transport diversity, e.g., to automate the choice among
+   multiple paths or provisioning domains.  It also enables the use of
+   transport protocols and features to applications without forcing the
+   developers to understand and manually set all parameters of the
+   protocols.
 
 Status of This Memo
 
@@ -44,19 +47,21 @@ Status of This Memo
 
    This Internet-Draft will expire on April 26, 2018.
 
+
+
+
+
+
+
+Tiesel, et al.           Expires April 26, 2018                 [Page 1]
+
+Internet-Draft                SocketIntents                 October 2017
+
+
 Copyright Notice
 
    Copyright (c) 2017 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
-
-
-
-
-
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 1]
-
-Internet-Draft                SocketIntents                 October 2017
-
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
@@ -90,29 +95,26 @@ Table of Contents
      8.1.  Performance Degradation Attacks . . . . . . . . . . . . .  10
      8.2.  Information Leakage . . . . . . . . . . . . . . . . . . .  11
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  11
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  11
+   10. Publications History  . . . . . . . . . . . . . . . . . . . .  11
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  11
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  12
    Appendix A.  Usage examples . . . . . . . . . . . . . . . . . . .  13
      A.1.  Example 1 . . . . . . . . . . . . . . . . . . . . . . . .  13
      A.2.  Example 2 . . . . . . . . . . . . . . . . . . . . . . . .  13
      A.3.  Example 3 . . . . . . . . . . . . . . . . . . . . . . . .  14
-   Appendix B.  Publications History . . . . . . . . . . . . . . . .  14
-   Appendix C.  Changes  . . . . . . . . . . . . . . . . . . . . . .  14
-     C.1.  Since -00 . . . . . . . . . . . . . . . . . . . . . . . .  14
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  15
+   Appendix B.  Changes  . . . . . . . . . . . . . . . . . . . . . .  14
+     B.1.  Since -00 . . . . . . . . . . . . . . . . . . . . . . . .  14
 
 
 
-
-
-
-
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 2]
+Tiesel, et al.           Expires April 26, 2018                 [Page 2]
 
 Internet-Draft                SocketIntents                 October 2017
 
+
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Conventions and Definitions
 
@@ -126,13 +128,12 @@ Internet-Draft                SocketIntents                 October 2017
 2.  Introduction
 
    Despite recent advances in the transport area, the adaption of new
-   transport protocols and transport protocol features is slow and only
-   happens in limited domains (primarily in the Web browser and within
-   datacenters).  The same problem occurs for taking advantage of
-   multiple available access networks or provisioning domains (PvDs).
-   In both cases, the benefits of the new transport diversity come at
-   the cost of an increased complexity that has to be mastered by the
-   application programmer.
+   transport protocols and transport protocol features is slow.  In
+   practice, this only happens in limited fields as Web browser or
+   within datacenters.  The same problem occurs for taking advantage of
+   paths or provisioning domains (PvDs).  In both cases, the benefits of
+   the new transport diversity come at the cost of an increased
+   complexity that has to be mastered by the application programmer.
 
    To enable transport features like TCP fast open [RFC7413] or to
    control how MPTCP [RFC6824] creates subflows requires specialized
@@ -141,12 +142,12 @@ Internet-Draft                SocketIntents                 October 2017
    Using them often requires profound knowledge of the transport
    protocol internals.
 
-   To use multiple network interfaces, applications usually have to use
-   their own heuristics to select which access network to use.  Choosing
-   the right interface is difficult as their characteristics differ,
-   e.g., regarding performance.  Obtaining the necessary information is
-   difficult since it may require special privileges and non-portable
-   APIs.
+   To use multiple paths, applications usually have to use their own
+   heuristics to select which paths, provisioning domains, or access
+   network to use.  Choosing the right path is difficult as their
+   characteristics differ, e.g., regarding performance.  Obtaining the
+   necessary information is difficult since it may require special
+   privileges and non-portable APIs.
 
    In all cases mentioned above, an application that wants to take
    advantage of the available transport diversity is faced with
@@ -164,8 +165,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 3]
+Tiesel, et al.           Expires April 26, 2018                 [Page 3]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -193,12 +193,12 @@ Internet-Draft                SocketIntents                 October 2017
    channel according to the application's intents in a best-effort
    fashion: They should provide the information needed to automatically
    enabling transport features the application can benefit from or help
-   choosing the most suitable (combination) of access networks or PvD
-   (see [RFC7556], Section 6.2) available.  The actual implementation is
-   not part of the Socket Intents concept, it is left to an OS policy
-   that may choose the best transport protocol, default parameters and
-   PvDs available and may also try to further optimize wherever
-   possible.
+   choosing the most suitable (combination) of paths based on the
+   properties of the access networks or PvD (see [RFC7556], Section 6.2)
+   available.  The actual implementation is not part of the Socket
+   Intents concept, it is left to an OS policy that may choose the best
+   transport protocol, default parameters and PvDs available and may
+   also try to further optimize wherever possible.
 
 4.  Socket Intents Concept
 
@@ -221,7 +221,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 4]
+Tiesel, et al.           Expires April 26, 2018                 [Page 4]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -277,7 +277,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 5]
+Tiesel, et al.           Expires April 26, 2018                 [Page 5]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -333,7 +333,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 6]
+Tiesel, et al.           Expires April 26, 2018                 [Page 6]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -389,7 +389,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 7]
+Tiesel, et al.           Expires April 26, 2018                 [Page 7]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -445,7 +445,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 8]
+Tiesel, et al.           Expires April 26, 2018                 [Page 8]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -464,17 +464,18 @@ Internet-Draft                SocketIntents                 October 2017
 
    Data type:  Enum
 
-   +-------------+-----------------------------------------------------+
-   | Level       | Description                                         |
-   +-------------+-----------------------------------------------------+
-   | sensitive*  | Disruptions result in application failure,          |
-   |             | disrupting user experience                          |
-   |             |                                                     |
-   | recoverable | Disruptions are inconvenient for the application,   |
-   |             | but can be recovered from                           |
-   |             |                                                     |
-   | resilient   | Disruptions have minimal impact for the application |
-   +-------------+-----------------------------------------------------+
+   +--------------+----------------------------------------------------+
+   | Level        | Description                                        |
+   +--------------+----------------------------------------------------+
+   | sensitive    | Disruptions result in application failure,         |
+   |              | disrupting user experience                         |
+   |              |                                                    |
+   | recoverable* | Disruptions are inconvenient for the application,  |
+   |              | but can be recovered from                          |
+   |              |                                                    |
+   | resilient    | Disruptions have minimal impact for the            |
+   |              | application                                        |
+   +--------------+----------------------------------------------------+
 
 6.8.  Cost Preferences
 
@@ -500,8 +501,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-
-Tiesel & Enghardt        Expires April 26, 2018                 [Page 9]
+Tiesel, et al.           Expires April 26, 2018                 [Page 9]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -557,7 +557,7 @@ Internet-Draft                SocketIntents                 October 2017
 
 
 
-Tiesel & Enghardt        Expires April 26, 2018                [Page 10]
+Tiesel, et al.           Expires April 26, 2018                [Page 10]
 
 Internet-Draft                SocketIntents                 October 2017
 
@@ -579,15 +579,23 @@ Internet-Draft                SocketIntents                 October 2017
    registry.  Details conforming to [RFC5226] are laid out in Section 5,
    the initial types for the registry are described in Section 6.
 
-10.  Acknowledgements
+10.  Publications History
+
+   o  The original idea of Socket Intents was published in [CoNEXT2013].
+
+   o  A performance study "Socket Intents: OS Support for Using Multiple
+      Access Networks and its Benefits for Web Browsing" is under
+      submission.
+
+11.  Acknowledgements
 
    This work has been supported by Leibniz Prize project funds of DFG -
    German Research Foundation: Gottfried Wilhelm Leibniz-Preis 2011 (FKZ
    FE 570/4-1).
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [RFC0020]  Cerf, V., "ASCII format for network interchange", STD 80,
               RFC 20, DOI 10.17487/RFC0020, October 1969,
@@ -603,20 +611,20 @@ Internet-Draft                SocketIntents                 October 2017
               DOI 10.17487/RFC5226, May 2008, <https://www.rfc-
               editor.org/info/rfc5226>.
 
-11.2.  Informative References
+
+
+Tiesel, et al.           Expires April 26, 2018                [Page 11]
+
+Internet-Draft                SocketIntents                 October 2017
+
+
+12.2.  Informative References
 
    [CoNEXT2013]
               Schmidt, P., Enghardt, T., Khalili, R., and A. Feldmann,
               "Socket intents", Proceedings of the ninth ACM conference
               on Emerging networking experiments and technologies -
               CoNEXT '13, DOI 10.1145/2535372.2535405, 2013.
-
-
-
-Tiesel & Enghardt        Expires April 26, 2018                [Page 11]
-
-Internet-Draft                SocketIntents                 October 2017
-
 
    [DASH]     International Organization for Standardization, "Dynamic
               adaptive streaming over HTTP (DASH) - Part 1: Media
@@ -625,9 +633,9 @@ Internet-Draft                SocketIntents                 October 2017
               standard/65274.html>.
 
    [I-D.pauly-taps-guidelines]
-              Pauly, T., "Software Guidelines for Protocol Evolution",
-              draft-pauly-taps-guidelines-00 (work in progress),
-              February 2017.
+              Pauly, T., "Guidelines for Racing During Connection
+              Establishment", draft-pauly-taps-guidelines-01 (work in
+              progress), October 2017.
 
    [I-D.tiesel-taps-communitgrany]
               Tiesel, P. and T. Enghardt, "Communication Units
@@ -659,20 +667,16 @@ Internet-Draft                SocketIntents                 October 2017
               Fast Open", RFC 7413, DOI 10.17487/RFC7413, December 2014,
               <https://www.rfc-editor.org/info/rfc7413>.
 
-   [RFC7556]  Anipko, D., Ed., "Multiple Provisioning Domain
-              Architecture", RFC 7556, DOI 10.17487/RFC7556, June 2015,
-              <https://www.rfc-editor.org/info/rfc7556>.
 
 
-
-
-
-
-
-Tiesel & Enghardt        Expires April 26, 2018                [Page 12]
+Tiesel, et al.           Expires April 26, 2018                [Page 12]
 
 Internet-Draft                SocketIntents                 October 2017
 
+
+   [RFC7556]  Anipko, D., Ed., "Multiple Provisioning Domain
+              Architecture", RFC 7556, DOI 10.17487/RFC7556, June 2015,
+              <https://www.rfc-editor.org/info/rfc7556>.
 
 Appendix A.  Usage examples
 
@@ -718,17 +722,18 @@ A.2.  Example 2
    cheaper link, the more expensive link can be added to satisfy the
    desired bandwidth.
 
+
+
+
+Tiesel, et al.           Expires April 26, 2018                [Page 13]
+
+Internet-Draft                SocketIntents                 October 2017
+
+
    If the application would set the "Cost Preferences" to
    "optimize_cost", the OS would not schedule traffic on the second
    subflow and the application would reduce the video quality to adapt
    to the available data rate.
-
-
-
-Tiesel & Enghardt        Expires April 26, 2018                [Page 13]
-
-Internet-Draft                SocketIntents                 October 2017
-
 
 A.3.  Example 3
 
@@ -753,17 +758,9 @@ A.3.  Example 3
    to use TCP, it can still optimize by disabling TCP Nagle Algorithm
    for console session related transmissions.
 
-Appendix B.  Publications History
+Appendix B.  Changes
 
-   o  The original idea of Socket Intents was published in [CoNEXT2013].
-
-   o  A performance study "Socket Intents: OS Support for Using Multiple
-      Access Networks and its Benefits for Web Browsing" is under
-      submission.
-
-Appendix C.  Changes
-
-C.1.  Since -00
+B.1.  Since -00
 
    o  Updates on Terminology (Object -> Message, Flow -> Assocication)
 
@@ -773,7 +770,9 @@ C.1.  Since -00
 
    o  Many clairfications
 
-   o  Fixed Author affiliation
+   o  Fixed Authors and affiliations
+
+Authors' Addresses
 
 
 
@@ -781,12 +780,11 @@ C.1.  Since -00
 
 
 
-Tiesel & Enghardt        Expires April 26, 2018                [Page 14]
+
+Tiesel, et al.           Expires April 26, 2018                [Page 14]
 
 Internet-Draft                SocketIntents                 October 2017
 
-
-Authors' Addresses
 
    Philipp S. Tiesel
    TU Berlin
@@ -806,6 +804,13 @@ Authors' Addresses
    Email: theresa@inet.tu-berlin.de
 
 
+   Anja Feldmann
+   TU Berlin
+   Marchstr. 23
+   Berlin
+   Germany
+
+   Email: anja@inet.tu-berlin.de
 
 
 
@@ -832,9 +837,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-Tiesel & Enghardt        Expires April 26, 2018                [Page 15]
+Tiesel, et al.           Expires April 26, 2018                [Page 15]
