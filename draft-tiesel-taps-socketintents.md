@@ -30,6 +30,14 @@ author:
     city: Berlin
     country: Germany
     email: theresa@inet.tu-berlin.de
+ -
+    ins: A. Feldmann
+    name: Anja Feldmann
+    organization: TU Berlin
+    street: Marchstr. 23
+    city: Berlin
+    country: Germany
+    email: anja@inet.tu-berlin.de
 
 normative:
   RFC0020:
@@ -57,12 +65,12 @@ informative:
 
 --- abstract
 
-This document outlines Socket Intents, a concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a generic and portable way.
+This document outlines Socket Intents, a concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a generic, intuitive and, portable way.
 Using Socket Intents an application can express what it knows, assumes, expects, or wants regarding its network communication.
 The information provided by Socket Intents can be used by the network stack to optimize communication in a best-effort way.
 
-Socket Intent can be used to stem against the complexity of exploiting transport diversity, e.g., to automate the use of multiple access networks or provisioning domains.
-It also opens the benefits of transport protocols and features to a larger user base by enabling to express applications intents in an intuitive and portable way.
+Socket Intent can be used to stem against the complexity of exploiting transport diversity, e.g., to automate the choice among multiple paths or provisioning domains.
+It also enables the use of transport protocols and features to applications without forcing the developers to understand and manually set all parameters of the protocols.
 
 
 --- middle
@@ -82,16 +90,17 @@ Association Set, Association, Stream, or Message are used as defined in {{I-D.ti
 Introduction        {#intro}
 ============
 
-Despite recent advances in the transport area, the adaption of new transport protocols and transport protocol features is slow and only happens in limited domains (primarily in the Web browser and within datacenters).
-The same problem occurs for taking advantage of multiple available access networks or provisioning domains (PvDs).
+Despite recent advances in the transport area, the adaption of new transport protocols and transport protocol features is slow.
+In practice, this only happens in limited fields as Web browser or within datacenters.
+The same problem occurs for taking advantage of paths or provisioning domains (PvDs).
 In both cases, the benefits of the new transport diversity come at the cost of an increased complexity that has to be mastered by the application programmer.
 
 To enable transport features like TCP fast open {{RFC7413}} or to control how MPTCP {{RFC6824}} creates subflows requires specialized APIs.
 These APIs are not part of the standard socket API and are usually not portable and not available in many programming languages.
 Using them often requires profound knowledge of the transport protocol internals.
 
-To use multiple network interfaces, applications usually have to use their own heuristics to select which access network to use.
-Choosing the right interface is difficult as their characteristics differ, e.g., regarding performance.
+To use multiple paths, applications usually have to use their own heuristics to select which paths, provisioning domains, or access network to use.
+Choosing the right path is difficult as their characteristics differ, e.g., regarding performance.
 Obtaining the necessary information is difficult since it may require special privileges and non-portable APIs.
 
 In all cases mentioned above, an application that wants to take advantage of the available transport diversity is faced with substantially higher complexity regarding network APIs and networking code.
@@ -124,7 +133,7 @@ These preferences, expectations and other information known about the upcoming c
 Its representation should be independent of the actual API used for network communication and should be expressible in whatever API available, e.g., as socket options for BSD sockets or as part of the address resolution configuration for [Post Sockets](#I-D.trammell-taps-post-sockets).
 
 Socket Intents should enable the OS to adjust the communication channel according to the application's intents in a best-effort fashion:
-They should provide the information needed to automatically enabling transport features the application can benefit from or help choosing the most suitable (combination) of access networks or PvD (see {{RFC7556}}, Section 6.2) available.
+They should provide the information needed to automatically enabling transport features the application can benefit from or help choosing the most suitable (combination) of paths based on the properties of the access networks or PvD (see {{RFC7556}}, Section 6.2) available.
 The actual implementation is not part of the Socket Intents concept, it is left to an OS policy that may choose the best transport protocol, default parameters and PvDs available and may also try to further optimize wherever possible.
 
 
@@ -352,8 +361,8 @@ Data type:
 
 | Level         | Description                                          |
 |---------------|------------------------------------------------------|
-| sensitive*    | Disruptions result in application failure, disrupting user experience |
-| recoverable   | Disruptions are inconvenient for the application, but can be recovered from |
+| sensitive     | Disruptions result in application failure, disrupting user experience |
+| recoverable*  | Disruptions are inconvenient for the application, but can be recovered from |
 | resilient     | Disruptions have minimal impact for the application |
 
 
@@ -438,6 +447,13 @@ The Socket Intents type namespace SHOULD be managed by the IANA
 registry. Details conforming to {{RFC5226}} are laid out in
 {{typespec}}, the initial types for the registry are described in
 {{types}}.
+
+
+Publications History
+====================
+
+- The original idea of Socket Intents was published in {{CoNEXT2013}}.
+- A performance study "Socket Intents: OS Support for Using Multiple Access Networks and its Benefits for Web Browsing" is under submission.
 
 
 
@@ -530,11 +546,6 @@ In case the OS has to use TCP, it can still optimize by disabling
 TCP Nagle Algorithm for console session related transmissions.
 
 
-Publications History
-====================
-
-- The original idea of Socket Intents was published in {{CoNEXT2013}}.
-- A performance study "Socket Intents: OS Support for Using Multiple Access Networks and its Benefits for Web Browsing" is under submission.
 
 
 Changes
@@ -547,4 +558,4 @@ Since -00
  - More detailed Socket Intent Types specification
  - Added implementation guidelines
  - Many clairfications
- - Fixed Author affiliation
+ - Fixed Authors and affiliations
