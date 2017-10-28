@@ -2,7 +2,7 @@
 title: Socket Intents
 abbrev: SocketIntents
 docname: draft-tiesel-taps-socketintents-latest
-date: 2017-10-23
+date: 2017-10-27
 category: exp
 
 ipr: trust200902
@@ -66,11 +66,11 @@ informative:
 --- abstract
 
 This document outlines Socket Intents, a concept that allows applications to share their knowledge about upcoming communication and express their performance preferences in a generic, intuitive and, portable way.
-Using Socket Intents an application can express what it knows, assumes, expects, or wants regarding its network communication.
+Using Socket Intents, an application can express what it knows, assumes, expects, or wants regarding its network communication.
 The information provided by Socket Intents can be used by the network stack to optimize communication in a best-effort way.
 
-Socket Intent can be used to stem against the complexity of exploiting transport diversity, e.g., to automate the choice among multiple paths or provisioning domains.
-It also enables the use of transport protocols and features to applications without forcing the developers to understand and manually set all parameters of the protocols.
+Socket Intent can be used to stem against the complexity of exploiting transport diversity, e.g., to automate the choice among multiple paths, provisioning domains or protocols.
+By shifting this complexity from the application developer to the operating system, it enables the use of these transport features to a wider range of applications.
 
 
 --- middle
@@ -91,12 +91,12 @@ Introduction        {#intro}
 ============
 
 Despite recent advances in the transport area, the adaption of new transport protocols and transport protocol features is slow.
-In practice, this only happens in limited fields as Web browser or within datacenters.
+In practice, this only happens in limited fields as Web browsers or within datacenters.
 The same problem occurs for taking advantage of paths or provisioning domains (PvDs).
 In both cases, the benefits of the new transport diversity come at the cost of an increased complexity that has to be mastered by the application programmer.
 
 To enable transport features like TCP fast open {{RFC7413}} or to control how MPTCP {{RFC6824}} creates subflows requires specialized APIs.
-These APIs are not part of the standard socket API and are usually not portable and not available in many programming languages.
+These APIs are not part of the standard socket API, usually not portable, and not available in many programming languages.
 Using them often requires profound knowledge of the transport protocol internals.
 
 To use multiple paths, applications usually have to use their own heuristics to select which paths, provisioning domains, or access network to use.
@@ -175,7 +175,7 @@ Socket Intent Types {#typespec}
 Socket Intents are structured as key-value-pairs.
 
 The key, called short name, specifies the Socket Intent type.
-It is identified by a lower case string of the lower-case characters \[a-z\], the numbers \[0-9\] and the separator "-".
+It is identified by a string of the lower-case characters \[a-z\],  numbers \[0-9\] and the separator "-".
 
 The namespace for the short names is partitioned as follows:
 
@@ -222,7 +222,7 @@ Data type:
 | mixed*        | Don't know or none of the above |
 
 Note:
-: Most categories suggest the use of other intents to further describe the traffic pattern anticipated, e.g., the bulk category suggesting the use of the Message Size intents or the stream category suggesting the
+: Most categories suggest the use of other intents to further describe the traffic pattern anticipated, e.g., the bulk category suggesting the use of the Size to be Sent intent or the stream category suggesting the
 Stream Bitrate and Duration intents.
 
 
@@ -232,7 +232,7 @@ Size to be Sent / Received
 This Intent is used to communicate the expected size of a transfer.
 
 Short name:
-: sndsz / recvsz
+: send_size / recv_size
 
 Applicability:
 : Association Set, Association, Stream, Message
@@ -266,29 +266,24 @@ This Intent is used to communicate the bitrate of the respective
 communication unit.
 
 Short name:
-: sndrate / recvrate
+: send_bitrate / recv_bitrate
 
 Applicability:
 : Association Set, Association, Stream
 
 Data type:
-: Int (bytes/sec)
+: Int (bits/sec)
 
 
 
 Burstiness
 -----------
 
-This Intent describes the anticipated sender-side burst characteristics of the
-traffic for this communication unit. It expresses how the traffic sent by the
-application is expected to vary over time, and, consequently, how long
-sequences of consecutively sent packets will be.
-Note that the actual burst characteristics of the traffic at the receiver
-side will depend on the network.
+This Intent describes the anticipated burst characteristics of the traffic for this communication unit.
+It expresses how the traffic sent by the application is expected to vary over time, and, consequently, how long sequences of consecutively sent packets will be.
+Note that the actual burst characteristics of the traffic at the receiver side will depend on the network.
 
-This Intent can provide hints to the application on what the resource usage
-pattern for this communication unit will look like, which can be useful for
-balancing the requirements of different application.
+This Intent can provide hints to the application on what the resource usage pattern for this communication unit will look like, which can be useful for balancing the requirements of different application.
 
 
 Short name:
@@ -343,10 +338,8 @@ Data type:
 Disruption Resilience
 ---------------------
 
-This Intent describes how an application deals with disruption of its communication,
-e.g. connection loss. It communicates how well the application can recover from such
-disturbance and can have implications on how many resources the OS should allocate to
-failover techniques for this particular communication unit.
+This Intent describes how an application deals with disruption of its communication, e.g. connection loss.
+It communicates how well the application can recover from such disturbance and can have implications on how many resources the OS should allocate to failover techniques for this particular communication unit.
 
 
 Short name:
@@ -370,9 +363,8 @@ Data type:
 Cost Preferences
 ----------------
 
-This describes the Intents of an Application towards costs cased by
-the respective communication unit. It should guide the OS how to
-handle cost vs. performance and reliability tradeoffs.
+This describes the Intents of an Application towards costs cased by the respective communication unit.
+It should guide the OS how to handle cost vs. performance and reliability tradeoffs.
 
 Short name:
 : cost
@@ -387,8 +379,12 @@ Data type:
 |---------------|------------------------------------------------------|
 | no_expense    | Avoid expensive transports and consider failing otherwise |
 | optimize_cost | Prefer inexpensive transports and accept service degradation |
-| balance_cost* | Use system policy to balance cost and other criteria |
+| balance_cost* | Do not bias balancing cost and other criteria |
 | ignore_cost   | Ignore cost, choose transport solely based on other criteria |
+
+Note:
+: the "no_expense" level implicitly asks the OS to fail communication attempts if no inexpensive transports are available.
+: Application developers MUST be aware that this also no hard requirement and can be ignored or overridden by the OS policy.
 
 
 
@@ -529,14 +525,8 @@ This usually involves at least one long-lived console session and
 possibly file transfers using SCP or rsync multiplexed on the same
 association (e.g. TCP connection).
 
-For the console session, the application can set the "Traffic Category"
-to "control", the "Burstiness" to "random bursts", the timeliness to
-"interactive" and the resilience to "sensitive".
-
-For the file transfers, SSH may set both, the "Traffic Category" and
-"Burstiness" to "bulk". It may also know the size of the transfer
-and therefore sets "Message Size to be Sent" or "Message Size to be
-Received".
+For the packets sent for the console session, the application can set the "Traffic Category" to "control", the "Burstiness" to "random bursts", the timeliness to "interactive" and the resilience to "sensitive".
+For the packets of the file transfers, SSH may set both, the "Traffic Category" and "Burstiness" to "bulk". It may also know the size of the transfer and therefore sets "Message Size to be Sent" or "Message Size to be Received".
 
 Assuming there are transport opportunities supporting multiple
 streams in a single association (e.g. SCPT {{RFC4960}}),
